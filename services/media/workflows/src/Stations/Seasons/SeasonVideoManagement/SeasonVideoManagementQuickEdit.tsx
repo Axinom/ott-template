@@ -7,5 +7,5 @@ export const SeasonVideoManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<SeasonData>>(QuickEditContext);
 
-  return <SeasonVideoManagementForm seasonId={selectedItem?.id} />;
+  return <SeasonVideoManagementForm seasonId={selectedItem.id} />;
 };

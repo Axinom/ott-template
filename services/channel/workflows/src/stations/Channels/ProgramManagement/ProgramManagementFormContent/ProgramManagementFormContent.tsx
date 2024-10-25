@@ -37,14 +37,14 @@ import {
 } from '../ProgramManagement.types';
 import { ProgramManagementContext } from '../ProgramManagementProvider/ProgramManagementProvider';
 import { ScheduleVideoExplorer } from '../VideoScheduleExplorer/VideoScheduleExplorer';
-import classes from './ProgramManagementForm.module.scss';
+import classes from './ProgramManagementFormContent.module.scss';
 
 type NewSchedule = Pick<
   CuePointSchedule,
   'type' | 'durationInSeconds' | 'videoId' | 'sortIndex' | 'programCuePointId'
 >;
 
-export const ProgramManagementForm: React.FC<{
+export const ProgramManagementFormContent: React.FC<{
   onStationError: (err: StationError | undefined) => void;
 }> = ({ onStationError }) => {
   const { allProviders, providerTypeMap } = useContext(

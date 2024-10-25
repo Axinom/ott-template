@@ -23,12 +23,12 @@ import { getCountryName } from '../../../Util/CountryNames/CountryNames';
 import { SeasonLicensingDetailsQuickEdit } from '../SeasonLicensingDetails/SeasonLicensingDetailsQuickEdit';
 import { SeasonLicensesData } from './SeasonLicensing.types';
 
+interface UrlParams {
+  seasonId: string;
+}
+
 export const SeasonLicensing: React.FC = () => {
-  const seasonId = Number(
-    useParams<{
-      seasonId: string;
-    }>().seasonId,
-  );
+  const seasonId = Number(useParams<UrlParams>().seasonId);
 
   const history = useHistory();
 

@@ -1,4 +1,3 @@
-import { BreadcrumbResolver } from '@axinom/mosaic-portal';
 import {
   Details,
   DetailsProps,
@@ -13,8 +12,6 @@ import * as Yup from 'yup';
 import { client } from '../../../apolloClient';
 import {
   IngestDocument,
-  IngestDocumentTitleDocument,
-  IngestDocumentTitleQuery,
   MutationUpdateIngestDocumentArgs,
   useIngestDocumentQuery,
   useUpdateIngestDocumentMutation,
@@ -98,17 +95,4 @@ const Form: React.FC = () => {
       <IngestStatus initialData={values} />
     </>
   );
-};
-
-export const IngestDocumentDetailsCrumb: BreadcrumbResolver = (params) => {
-  return async (): Promise<string> => {
-    const response = await client.query<IngestDocumentTitleQuery>({
-      query: IngestDocumentTitleDocument,
-      variables: {
-        id: Number(params['ingestId']),
-      },
-      errorPolicy: 'ignore',
-    });
-    return response.data.ingestDocument?.title ?? 'Ingest Document';
-  };
 };

@@ -7,5 +7,5 @@ export const SeasonImageManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<SeasonData>>(QuickEditContext);
 
-  return <SeasonImageManagementForm seasonId={selectedItem?.id} />;
+  return <SeasonImageManagementForm seasonId={selectedItem.id} />;
 };

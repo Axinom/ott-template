@@ -1,16 +1,13 @@
 import { PiletApi } from '@axinom/mosaic-portal';
 import React from 'react';
-import { Extensions } from '../../externals';
 import { MediaIconName } from '../../MediaIcons';
 import { MediaIcons } from '../../MediaIcons/MediaIcons';
-import {
-  IngestDocumentDetails,
-  IngestDocumentDetailsCrumb,
-} from './IngestDocumentDetails/IngestDocumentDetails';
+import { IngestDocumentDetails } from './IngestDocumentDetails/IngestDocumentDetails';
+import { IngestDocumentDetailsCrumb } from './IngestDocumentDetails/IngestDocumentDetailsCrumb';
 import { IngestDocuments } from './IngestDocumentsExplorer/IngestDocuments';
 import { IngestDocumentUpload } from './IngestDocumentUpload/IngestDocumentUpload';
 
-export function register(app: PiletApi, extensions: Extensions): void {
+export function register(app: PiletApi): void {
   const ingestNav = {
     name: 'ingest',
     path: '/ingest',

@@ -23,12 +23,12 @@ import { getCountryName } from '../../../Util/CountryNames/CountryNames';
 import { TvShowLicensingDetailsQuickEdit } from '../TvShowLicensingDetails/TvShowLicensingDetailsQuickEdit';
 import { TvshowLicensesData } from './TvShowLicensing.types';
 
+interface UrlParams {
+  tvshowId: string;
+}
+
 export const TvShowLicensing: React.FC = () => {
-  const tvshowId = Number(
-    useParams<{
-      tvshowId: string;
-    }>().tvshowId,
-  );
+  const tvshowId = Number(useParams<UrlParams>().tvshowId);
 
   const history = useHistory();
 

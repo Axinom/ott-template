@@ -2,14 +2,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { MovieLicensingDetailsForm } from './MovieLicensingDetailsForm';
 
-interface MovieLicensingDetailsUrlParams {
+interface UrlParams {
   moviesLicenseId: string;
   movieId: string;
 }
 
 export const MovieLicensingDetails: React.FC = () => {
-  const { movieId, moviesLicenseId } =
-    useParams<MovieLicensingDetailsUrlParams>();
+  const { movieId, moviesLicenseId } = useParams<UrlParams>();
 
   return (
     <MovieLicensingDetailsForm

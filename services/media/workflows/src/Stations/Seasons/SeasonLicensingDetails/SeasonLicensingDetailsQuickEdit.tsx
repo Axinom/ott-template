@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { SeasonLicensesData } from '../SeasonLicensing/SeasonLicensing.types';
 import { SeasonLicensingDetailsForm } from './SeasonLicensingDetailsForm';
 
-interface SeasonLicensingDetailsQuickEditUrlParams {
+interface UrlParams {
   seasonId: string;
 }
 
@@ -12,7 +12,7 @@ export const SeasonLicensingDetailsQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<SeasonLicensesData>>(QuickEditContext);
 
-  const { seasonId } = useParams<SeasonLicensingDetailsQuickEditUrlParams>();
+  const { seasonId } = useParams<UrlParams>();
 
   return (
     <SeasonLicensingDetailsForm

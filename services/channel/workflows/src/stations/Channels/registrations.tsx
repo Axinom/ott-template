@@ -84,10 +84,18 @@ export function register(app: PiletApi, extensions: Extensions): void {
     name: 'channels',
   });
 
-  app.registerPage(routes.channels, Channels, {
-    breadcrumb: () => 'Channels',
-    permissions,
-  });
+  app.registerPage(
+    routes.channels,
+    () => (
+      <ExtensionsContext.Provider value={extensions}>
+        <Channels />
+      </ExtensionsContext.Provider>
+    ),
+    {
+      breadcrumb: () => 'Channels',
+      permissions,
+    },
+  );
 
   app.registerPage(routes.channelCreate, ChannelCreate, {
     breadcrumb: () => 'New Channel',
@@ -107,10 +115,18 @@ export function register(app: PiletApi, extensions: Extensions): void {
     },
   );
 
-  app.registerPage(routes.playlists, Playlists, {
-    breadcrumb: () => 'Playlists',
-    permissions,
-  });
+  app.registerPage(
+    routes.playlists,
+    () => (
+      <ExtensionsContext.Provider value={extensions}>
+        <Playlists />
+      </ExtensionsContext.Provider>
+    ),
+    {
+      breadcrumb: () => 'Playlists',
+      permissions,
+    },
+  );
 
   app.registerPage(routes.playlistCreate, PlaylistCreate, {
     breadcrumb: () => 'New Playlist',

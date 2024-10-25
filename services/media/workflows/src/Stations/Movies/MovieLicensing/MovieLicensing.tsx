@@ -23,12 +23,12 @@ import { getCountryName } from '../../../Util/CountryNames/CountryNames';
 import { MovieLicensingDetailsQuickEdit } from '../MovieLicensingDetails/MovieLicensingDetailsQuickEdit';
 import { MovieLicensesData } from './MovieLicensing.types';
 
+interface UrlParams {
+  movieId: string;
+}
+
 export const MovieLicensing: React.FC = () => {
-  const movieId = Number(
-    useParams<{
-      movieId: string;
-    }>().movieId,
-  );
+  const movieId = Number(useParams<UrlParams>().movieId);
 
   const history = useHistory();
 

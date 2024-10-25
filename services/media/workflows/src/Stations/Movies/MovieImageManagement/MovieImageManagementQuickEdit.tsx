@@ -7,5 +7,5 @@ export const MovieImageManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<MovieData>>(QuickEditContext);
 
-  return <MovieImageManagementForm movieId={selectedItem?.id} />;
+  return <MovieImageManagementForm movieId={selectedItem.id} />;
 };

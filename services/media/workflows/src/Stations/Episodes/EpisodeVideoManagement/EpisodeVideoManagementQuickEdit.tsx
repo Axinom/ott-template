@@ -7,5 +7,5 @@ export const EpisodeVideoManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<EpisodeData>>(QuickEditContext);
 
-  return <EpisodeVideoManagementForm episodeId={selectedItem?.id} />;
+  return <EpisodeVideoManagementForm episodeId={selectedItem.id} />;
 };

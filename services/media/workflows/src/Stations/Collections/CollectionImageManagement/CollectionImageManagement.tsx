@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CollectionImageManagementForm } from './CollectionImageManagementForm';
 
-export const CollectionImageManagement: React.FC = () => {
-  const collectionId = Number(
-    useParams<{
-      collectionId: string;
-    }>().collectionId,
-  );
+interface UrlParams {
+  collectionId: string;
+}
 
-  return <CollectionImageManagementForm collectionId={collectionId} />;
+export const CollectionImageManagement: React.FC = () => {
+  const { collectionId } = useParams<UrlParams>();
+
+  return <CollectionImageManagementForm collectionId={Number(collectionId)} />;
 };

@@ -7,5 +7,5 @@ export const TvShowVideoManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<TvShowData>>(QuickEditContext);
 
-  return <TvShowVideoManagementForm tvshowId={selectedItem?.id} />;
+  return <TvShowVideoManagementForm tvshowId={selectedItem.id} />;
 };
