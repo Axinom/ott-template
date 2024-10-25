@@ -17,11 +17,9 @@ import {
   IngestDocumentsQueryVariables,
   IngestDocumentSubscriptionEventKey,
 } from '../../../generated/graphql';
+import { IngestDocumentDetailsQuickEdit } from '../IngestDocumentDetails/IngestDocumentDetailsQuickEdit';
+import { IngestDocumentsData } from './IngestDocuments.types';
 import { IngestStatusRenderer } from './IngestStatusRenderer/IngestStatusRenderer';
-
-type IngestDocumentsData = NonNullable<
-  IngestDocumentsQuery['filtered']
->['nodes'][number];
 
 export const IngestDocuments: React.FC = () => {
   // Columns
@@ -134,6 +132,12 @@ export const IngestDocuments: React.FC = () => {
       defaultSortOrder={{ column: 'updatedDate', direction: 'desc' }}
       onCreateAction="/ingest/upload"
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <IngestDocumentDetailsQuickEdit />,
+          label: 'Ingest Details',
+        },
+      ]}
     />
   );
 };

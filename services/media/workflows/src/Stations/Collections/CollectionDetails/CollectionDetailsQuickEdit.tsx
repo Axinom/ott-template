@@ -7,7 +7,5 @@ export const CollectionDetailsQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<CollectionData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <CollectionDetailsForm collectionId={selectedItem.id} />
-  ) : null;
+  return <CollectionDetailsForm collectionId={selectedItem.id} />;
 };

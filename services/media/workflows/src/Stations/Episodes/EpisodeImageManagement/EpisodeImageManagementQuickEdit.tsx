@@ -7,7 +7,5 @@ export const EpisodeImageManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<EpisodeData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <EpisodeImageManagementForm episodeId={selectedItem?.id} />
-  ) : null;
+  return <EpisodeImageManagementForm episodeId={selectedItem?.id} />;
 };

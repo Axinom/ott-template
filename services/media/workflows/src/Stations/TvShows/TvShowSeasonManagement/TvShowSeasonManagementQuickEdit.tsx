@@ -7,7 +7,5 @@ export const TvShowSeasonManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<TvShowData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <TvShowSeasonManagementForm tvshowId={selectedItem.id} />
-  ) : null;
+  return <TvShowSeasonManagementForm tvshowId={selectedItem.id} />;
 };

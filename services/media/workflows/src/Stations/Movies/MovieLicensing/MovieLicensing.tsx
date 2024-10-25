@@ -20,10 +20,8 @@ import {
   useDeleteMoviesLicenseMutation,
 } from '../../../generated/graphql';
 import { getCountryName } from '../../../Util/CountryNames/CountryNames';
-
-type MoviesLicensesData = NonNullable<
-  MoviesLicensesQuery['moviesLicenses']
->['nodes'][number];
+import { MovieLicensingDetailsQuickEdit } from '../MovieLicensingDetails/MovieLicensingDetailsQuickEdit';
+import { MovieLicensesData } from './MovieLicensing.types';
 
 export const MovieLicensing: React.FC = () => {
   const movieId = Number(
@@ -40,7 +38,7 @@ export const MovieLicensing: React.FC = () => {
   });
 
   // Columns
-  const explorerColumns: Column<MoviesLicensesData>[] = [
+  const explorerColumns: Column<MovieLicensesData>[] = [
     {
       propertyName: 'licenseStart',
       label: 'From',
@@ -63,7 +61,7 @@ export const MovieLicensing: React.FC = () => {
   ];
 
   // Data provider
-  const dataProvider: ExplorerDataProvider<MoviesLicensesData> = {
+  const dataProvider: ExplorerDataProvider<MovieLicensesData> = {
     loadData: async ({ pagingInformation, sorting }) => {
       const result = await client.query<
         MoviesLicensesQuery,
@@ -89,7 +87,7 @@ export const MovieLicensing: React.FC = () => {
   };
 
   const generateInlineMenuActions: (
-    data: MoviesLicensesData,
+    data: MovieLicensesData,
   ) => ActionData[] = ({ id }) => {
     return [
       {
@@ -109,7 +107,7 @@ export const MovieLicensing: React.FC = () => {
   };
 
   return (
-    <NavigationExplorer<MoviesLicensesData>
+    <NavigationExplorer<MovieLicensesData>
       title="Movie Licensing"
       stationKey="MoviesLicenseExplorer"
       columns={explorerColumns}
@@ -117,6 +115,12 @@ export const MovieLicensing: React.FC = () => {
       calculateNavigateUrl={(item) => `/movies/${movieId}/licenses/${item.id}`}
       onCreateAction={`/movies/${movieId}/licenses/create`}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <MovieLicensingDetailsQuickEdit />,
+          label: 'Licensing Details',
+        },
+      ]}
     />
   );
 };
