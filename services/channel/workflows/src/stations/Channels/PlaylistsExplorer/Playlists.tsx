@@ -193,10 +193,10 @@ export const Playlists: React.FC = () => {
           component: <ProgramManagementQuickEdit />,
           label: 'Programs',
           generateDetailsLink: (item) =>
-            `${routes.generate(routes.playlistDetails, {
+            routes.generate(routes.programs, {
               channelId,
               playlistId: item.id,
-            })}/programs`,
+            }),
         },
       ]}
     />

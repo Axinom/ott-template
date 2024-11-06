@@ -169,12 +169,14 @@ export const Channels: React.FC = () => {
         {
           component: <ChannelImageManagementQuickEdit />,
           label: 'Manage Logo',
-          generateDetailsLink: (item) => `/channels/${item.id}/logo`,
+          generateDetailsLink: (item) =>
+            routes.generate(routes.channelLogo, { channelId: item.id }),
         },
         {
           component: <ChannelVideoManagementQuickEdit />,
           label: 'Manage Videos',
-          generateDetailsLink: (item) => `/channels/${item.id}/videos`,
+          generateDetailsLink: (item) =>
+            routes.generate(routes.channelVideos, { channelId: item.id }),
         },
       ]}
     />
