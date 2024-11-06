@@ -22,10 +22,16 @@ import {
   useUnpublishPlaylistMutation,
 } from '../../../generated/graphql';
 import { publicationStateMap } from '../../../util/Publishing/publicationStateMap';
+import { PlaylistDetailsQuickEdit } from '../PlaylistDetails/PlaylistDetailsQuickEdit';
+import { ProgramManagementQuickEdit } from '../ProgramManagement/ProgramManagementQuickEdit';
 import { routes } from '../routes';
 import { filterOptions, transformFilters } from './Playlists.filters';
 import classes from './Playlists.module.scss';
 import { PlaylistsData } from './Playlists.types';
+
+interface UrlParams {
+  channelId: string;
+}
 
 export const Playlists: React.FC = () => {
   const [deletePlaylistMutation] = useDeletePlaylistMutation({
@@ -35,7 +41,7 @@ export const Playlists: React.FC = () => {
     client,
   });
 
-  const channelId = useParams<{ channelId: string }>().channelId;
+  const { channelId } = useParams<UrlParams>();
 
   const dataProvider: ExplorerDataProvider<PlaylistsData> = {
     loadData: async ({ pagingInformation, sorting, filters }) => {
@@ -178,6 +184,21 @@ export const Playlists: React.FC = () => {
       }}
       className={classes.explorer}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <PlaylistDetailsQuickEdit />,
+          label: 'Playlist Details',
+        },
+        {
+          component: <ProgramManagementQuickEdit />,
+          label: 'Programs',
+          generateDetailsLink: (item) =>
+            routes.generate(routes.programs, {
+              channelId,
+              playlistId: item.id,
+            }),
+        },
+      ]}
     />
   );
 };

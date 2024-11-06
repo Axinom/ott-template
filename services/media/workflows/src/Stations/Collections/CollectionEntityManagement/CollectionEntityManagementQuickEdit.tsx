@@ -7,7 +7,5 @@ export const CollectionEntityManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<CollectionData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <CollectionEntityManagementForm collectionId={selectedItem.id} />
-  ) : null;
+  return <CollectionEntityManagementForm collectionId={selectedItem.id} />;
 };

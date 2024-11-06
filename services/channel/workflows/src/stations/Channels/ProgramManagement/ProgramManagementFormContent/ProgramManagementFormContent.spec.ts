@@ -3,7 +3,7 @@ import {
   getCuePointScheduleNodesField,
   moveCpsNode,
   rearrangeArray,
-} from './ProgramManagementForm';
+} from './ProgramManagementFormContent';
 
 describe('ProgramManagementForm', () => {
   describe('getCuePointScheduleNodesField', () => {

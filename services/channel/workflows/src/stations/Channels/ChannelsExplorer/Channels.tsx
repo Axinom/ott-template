@@ -20,6 +20,9 @@ import {
   useUnpublishChannelMutation,
 } from '../../../generated/graphql';
 import { publicationStateMap } from '../../../util/Publishing/publicationStateMap';
+import { ChannelDetailsQuickEdit } from '../ChannelDetails/ChannelDetailsQuickEdit';
+import { ChannelImageManagementQuickEdit } from '../ChannelImageManagement/ChannelImageManagementQuickEdit';
+import { ChannelVideoManagementQuickEdit } from '../ChannelVideoManagement/ChannelVideoManagementQuickEdit';
 import { routes } from '../routes';
 import { filterOptions, transformFilters } from './Channels.filters';
 import classes from './Channels.module.scss';
@@ -158,6 +161,24 @@ export const Channels: React.FC = () => {
       onCreateAction={routes.channelCreate}
       className={classes.explorer}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <ChannelDetailsQuickEdit />,
+          label: 'Channel Details',
+        },
+        {
+          component: <ChannelImageManagementQuickEdit />,
+          label: 'Manage Logo',
+          generateDetailsLink: (item) =>
+            routes.generate(routes.channelLogo, { channelId: item.id }),
+        },
+        {
+          component: <ChannelVideoManagementQuickEdit />,
+          label: 'Manage Videos',
+          generateDetailsLink: (item) =>
+            routes.generate(routes.channelVideos, { channelId: item.id }),
+        },
+      ]}
     />
   );
 };

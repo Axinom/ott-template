@@ -20,17 +20,15 @@ import {
   useDeleteSeasonsLicenseMutation,
 } from '../../../generated/graphql';
 import { getCountryName } from '../../../Util/CountryNames/CountryNames';
+import { SeasonLicensingDetailsQuickEdit } from '../SeasonLicensingDetails/SeasonLicensingDetailsQuickEdit';
+import { SeasonLicensesData } from './SeasonLicensing.types';
 
-type SeasonsLicensesData = NonNullable<
-  SeasonsLicensesQuery['seasonsLicenses']
->['nodes'][number];
+interface UrlParams {
+  seasonId: string;
+}
 
 export const SeasonLicensing: React.FC = () => {
-  const seasonId = Number(
-    useParams<{
-      seasonId: string;
-    }>().seasonId,
-  );
+  const seasonId = Number(useParams<UrlParams>().seasonId);
 
   const history = useHistory();
 
@@ -40,7 +38,7 @@ export const SeasonLicensing: React.FC = () => {
   });
 
   // Columns
-  const explorerColumns: Column<SeasonsLicensesData>[] = [
+  const explorerColumns: Column<SeasonLicensesData>[] = [
     {
       propertyName: 'licenseStart',
       label: 'From',
@@ -63,7 +61,7 @@ export const SeasonLicensing: React.FC = () => {
   ];
 
   // Data provider
-  const dataProvider: ExplorerDataProvider<SeasonsLicensesData> = {
+  const dataProvider: ExplorerDataProvider<SeasonLicensesData> = {
     loadData: async ({ pagingInformation, sorting }) => {
       const result = await client.query<
         SeasonsLicensesQuery,
@@ -89,7 +87,7 @@ export const SeasonLicensing: React.FC = () => {
   };
 
   const generateInlineMenuActions: (
-    data: SeasonsLicensesData,
+    data: SeasonLicensesData,
   ) => ActionData[] = ({ id }) => {
     return [
       {
@@ -109,7 +107,7 @@ export const SeasonLicensing: React.FC = () => {
   };
 
   return (
-    <NavigationExplorer<SeasonsLicensesData>
+    <NavigationExplorer<SeasonLicensesData>
       title="Season Licensing"
       stationKey="SeasonsLicenseExplorer"
       columns={explorerColumns}
@@ -119,6 +117,12 @@ export const SeasonLicensing: React.FC = () => {
       }
       onCreateAction={`/seasons/${seasonId}/licenses/create`}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <SeasonLicensingDetailsQuickEdit />,
+          label: 'Licensing Details',
+        },
+      ]}
     />
   );
 };

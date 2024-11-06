@@ -7,7 +7,5 @@ export const TvShowImageManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<TvShowData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <TvShowImageManagementForm tvshowId={selectedItem.id} />
-  ) : null;
+  return <TvShowImageManagementForm tvshowId={selectedItem.id} />;
 };

@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { EpisodeImageManagementForm } from './EpisodeImageManagementForm';
 
-export const EpisodeImageManagement: React.FC = () => {
-  const episodeId = Number(
-    useParams<{
-      episodeId: string;
-    }>().episodeId,
-  );
+interface UrlParams {
+  episodeId: string;
+}
 
-  return <EpisodeImageManagementForm episodeId={episodeId} />;
+export const EpisodeImageManagement: React.FC = () => {
+  const { episodeId } = useParams<UrlParams>();
+
+  return <EpisodeImageManagementForm episodeId={Number(episodeId)} />;
 };

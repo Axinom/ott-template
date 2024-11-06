@@ -7,7 +7,5 @@ export const CollectionImageManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<CollectionData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <CollectionImageManagementForm collectionId={selectedItem.id} />
-  ) : null;
+  return <CollectionImageManagementForm collectionId={selectedItem.id} />;
 };

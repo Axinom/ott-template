@@ -20,10 +20,8 @@ import {
   useDeleteEpisodesLicenseMutation,
 } from '../../../generated/graphql';
 import { getCountryName } from '../../../Util/CountryNames/CountryNames';
-
-type EpisodesLicensesData = NonNullable<
-  EpisodesLicensesQuery['episodesLicenses']
->['nodes'][number];
+import { EpisodeLicensingDetailsQuickEdit } from '../EpisodeLicensingDetails/EpisodeLicensingDetailsQuickEdit';
+import { EpisodeLicensesData } from './EpisodeLicensing.types';
 
 export const EpisodeLicensing: React.FC = () => {
   const episodeId = Number(
@@ -40,7 +38,7 @@ export const EpisodeLicensing: React.FC = () => {
   });
 
   // Columns
-  const explorerColumns: Column<EpisodesLicensesData>[] = [
+  const explorerColumns: Column<EpisodeLicensesData>[] = [
     {
       propertyName: 'licenseStart',
       label: 'From',
@@ -62,7 +60,7 @@ export const EpisodeLicensing: React.FC = () => {
   ];
 
   // Data provider
-  const dataProvider: ExplorerDataProvider<EpisodesLicensesData> = {
+  const dataProvider: ExplorerDataProvider<EpisodeLicensesData> = {
     loadData: async ({ pagingInformation, sorting }) => {
       const result = await client.query<
         EpisodesLicensesQuery,
@@ -89,7 +87,7 @@ export const EpisodeLicensing: React.FC = () => {
   };
 
   const generateInlineMenuActions: (
-    data: EpisodesLicensesData,
+    data: EpisodeLicensesData,
   ) => ActionData[] = ({ id }) => {
     return [
       {
@@ -109,7 +107,7 @@ export const EpisodeLicensing: React.FC = () => {
   };
 
   return (
-    <NavigationExplorer<EpisodesLicensesData>
+    <NavigationExplorer<EpisodeLicensesData>
       title="Episode Licensing"
       stationKey="EpisodesLicenseExplorer"
       columns={explorerColumns}
@@ -119,6 +117,12 @@ export const EpisodeLicensing: React.FC = () => {
       }
       onCreateAction={`/episodes/${episodeId}/licenses/create`}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <EpisodeLicensingDetailsQuickEdit />,
+          label: 'Licensing Details',
+        },
+      ]}
     />
   );
 };

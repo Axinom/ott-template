@@ -7,7 +7,5 @@ export const MovieVideoManagementQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<MovieData>>(QuickEditContext);
 
-  return selectedItem ? (
-    <MovieVideoManagementForm movieId={selectedItem?.id} />
-  ) : null;
+  return <MovieVideoManagementForm movieId={selectedItem.id} />;
 };

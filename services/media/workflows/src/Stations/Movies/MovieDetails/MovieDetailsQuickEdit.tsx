@@ -7,5 +7,5 @@ export const MovieDetailsQuickEdit: React.FC = () => {
   const { selectedItem } =
     useContext<QuickEditContextType<MovieData>>(QuickEditContext);
 
-  return selectedItem ? <MovieDetailsForm movieId={selectedItem.id} /> : null;
+  return <MovieDetailsForm movieId={selectedItem.id} />;
 };

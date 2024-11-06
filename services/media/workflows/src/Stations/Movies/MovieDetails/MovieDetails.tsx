@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { MovieDetailsForm } from './MovieDetailsForm';
 
-export const MovieDetails: React.FC = () => {
-  const movieId = Number(
-    useParams<{
-      movieId: string;
-    }>().movieId,
-  );
+interface UrlParams {
+  movieId: string;
+}
 
-  return <MovieDetailsForm movieId={movieId} />;
+export const MovieDetails: React.FC = () => {
+  const { movieId } = useParams<UrlParams>();
+
+  return <MovieDetailsForm movieId={Number(movieId)} />;
 };

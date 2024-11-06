@@ -14,6 +14,6 @@ export const SeasonDetailsCrumb: BreadcrumbResolver = (params) => {
       },
       errorPolicy: 'ignore',
     });
-    return `Season ${response.data.season?.index}` ?? 'TV Show Details';
+    return `Season ${response.data.season?.index}`;
   };
 };

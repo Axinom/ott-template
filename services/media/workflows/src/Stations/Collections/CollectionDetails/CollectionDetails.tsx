@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CollectionDetailsForm } from './CollectionDetailsForm';
 
-export const CollectionDetails: React.FC = () => {
-  const collectionId = Number(
-    useParams<{
-      collectionId: string;
-    }>().collectionId,
-  );
+interface UrlParams {
+  collectionId: string;
+}
 
-  return <CollectionDetailsForm collectionId={collectionId} />;
+export const CollectionDetails: React.FC = () => {
+  const { collectionId } = useParams<UrlParams>();
+
+  return <CollectionDetailsForm collectionId={Number(collectionId)} />;
 };

@@ -20,17 +20,15 @@ import {
   useDeleteTvshowsLicenseMutation,
 } from '../../../generated/graphql';
 import { getCountryName } from '../../../Util/CountryNames/CountryNames';
+import { TvShowLicensingDetailsQuickEdit } from '../TvShowLicensingDetails/TvShowLicensingDetailsQuickEdit';
+import { TvshowLicensesData } from './TvShowLicensing.types';
 
-type TvshowsLicensesData = NonNullable<
-  TvshowsLicensesQuery['tvshowsLicenses']
->['nodes'][number];
+interface UrlParams {
+  tvshowId: string;
+}
 
 export const TvShowLicensing: React.FC = () => {
-  const tvshowId = Number(
-    useParams<{
-      tvshowId: string;
-    }>().tvshowId,
-  );
+  const tvshowId = Number(useParams<UrlParams>().tvshowId);
 
   const history = useHistory();
 
@@ -40,7 +38,7 @@ export const TvShowLicensing: React.FC = () => {
   });
 
   // Columns
-  const explorerColumns: Column<TvshowsLicensesData>[] = [
+  const explorerColumns: Column<TvshowLicensesData>[] = [
     {
       propertyName: 'licenseStart',
       label: 'From',
@@ -63,7 +61,7 @@ export const TvShowLicensing: React.FC = () => {
   ];
 
   // Data provider
-  const dataProvider: ExplorerDataProvider<TvshowsLicensesData> = {
+  const dataProvider: ExplorerDataProvider<TvshowLicensesData> = {
     loadData: async ({ pagingInformation, sorting }) => {
       const result = await client.query<
         TvshowsLicensesQuery,
@@ -89,7 +87,7 @@ export const TvShowLicensing: React.FC = () => {
   };
 
   const generateInlineMenuActions: (
-    data: TvshowsLicensesData,
+    data: TvshowLicensesData,
   ) => ActionData[] = ({ id }) => {
     return [
       {
@@ -109,7 +107,7 @@ export const TvShowLicensing: React.FC = () => {
   };
 
   return (
-    <NavigationExplorer<TvshowsLicensesData>
+    <NavigationExplorer<TvshowLicensesData>
       title="TV Show Licensing"
       stationKey="TvshowsLicenseExplorer"
       columns={explorerColumns}
@@ -119,6 +117,12 @@ export const TvShowLicensing: React.FC = () => {
       }
       onCreateAction={`/tvshows/${tvshowId}/licenses/create`}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <TvShowLicensingDetailsQuickEdit />,
+          label: 'Licensing Details',
+        },
+      ]}
     />
   );
 };

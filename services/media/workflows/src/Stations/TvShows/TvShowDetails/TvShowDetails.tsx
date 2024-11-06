@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { TvShowDetailsForm } from './TvShowDetailsForm';
 
-export const TvShowDetails: React.FC = () => {
-  const tvshowId = Number(
-    useParams<{
-      tvshowId: string;
-    }>().tvshowId,
-  );
+interface UrlParams {
+  tvshowId: string;
+}
 
-  return <TvShowDetailsForm tvshowId={tvshowId} />;
+export const TvShowDetails: React.FC = () => {
+  const { tvshowId } = useParams<UrlParams>();
+
+  return <TvShowDetailsForm tvshowId={Number(tvshowId)} />;
 };
