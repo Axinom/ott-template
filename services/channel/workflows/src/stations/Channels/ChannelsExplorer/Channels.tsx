@@ -22,6 +22,7 @@ import {
 import { publicationStateMap } from '../../../util/Publishing/publicationStateMap';
 import { ChannelDetailsQuickEdit } from '../ChannelDetails/ChannelDetailsQuickEdit';
 import { ChannelImageManagementQuickEdit } from '../ChannelImageManagement/ChannelImageManagementQuickEdit';
+import { ChannelPublishingQuickEdit } from '../ChannelPublishing/ChannelPublishingQuickEdit';
 import { ChannelVideoManagementQuickEdit } from '../ChannelVideoManagement/ChannelVideoManagementQuickEdit';
 import { routes } from '../routes';
 import { filterOptions, transformFilters } from './Channels.filters';
@@ -177,6 +178,12 @@ export const Channels: React.FC = () => {
           label: 'Manage Videos',
           generateDetailsLink: (item) =>
             routes.generate(routes.channelVideos, { channelId: item.id }),
+        },
+        {
+          component: <ChannelPublishingQuickEdit />,
+          label: 'Publishing Validation',
+          generateDetailsLink: (item) =>
+            routes.generate(routes.channelPublishing, { channelId: item.id }),
         },
       ]}
     />

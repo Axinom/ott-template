@@ -22,6 +22,7 @@ import {
 } from '../../../generated/graphql';
 import { ValidationResultsRenderer } from '../../../Util/PublishingSnapshots/ValidationResultsRenderer/ValidationResultsRenderer';
 import { StringEnumRenderer } from '../../../Util/StringEnumRenderer/StringEnumRenderer';
+import { PublishingSnapshotQuickEdit } from '../PublishingSnapshotDetails/PublishingSnapshotQuickEdit';
 import { usePublishingSnapshotActions } from './PublishingSnapshotExplorer.actions';
 import { usePublishingSnapshotFilters } from './PublishingSnapshotExplorer.filter';
 import {
@@ -170,6 +171,12 @@ export const PublishingSnapshotExplorer: React.FC<
       dataProvider={dataProvider}
       defaultSortOrder={{ column: 'createdDate', direction: 'desc' }}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <PublishingSnapshotQuickEdit type={entityType} />,
+          label: 'Publishing Validation',
+        },
+      ]}
     />
   );
 };

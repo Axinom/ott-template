@@ -29,6 +29,7 @@ import { StringEnumRenderer } from '../../../Util/StringEnumRenderer/StringEnumR
 import { useSnapshotRegistryActions } from './SnapshotRegistry.actions';
 import { useSnapshotRegistryFilters } from './SnapshotRegistry.filters';
 import { SnapshotData } from './SnapshotRegistry.types';
+import { SnapshotRegistryQuickEdit } from './SnapshotRegistryQuickEdit';
 
 export const SnapshotRegistry: React.FC = () => {
   const { filterOptions, transformFilters } = useSnapshotRegistryFilters();
@@ -209,6 +210,12 @@ export const SnapshotRegistry: React.FC = () => {
       filterOptions={filterOptions}
       defaultSortOrder={{ column: 'updatedDate', direction: 'desc' }}
       inlineMenuActions={generateInlineMenuActions}
+      quickEditRegistrations={[
+        {
+          component: <SnapshotRegistryQuickEdit />,
+          label: 'Publishing Validation',
+        },
+      ]}
     />
   );
 };
