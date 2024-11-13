@@ -387,10 +387,10 @@
   resolved "https://registry.yarnpkg.com/@axinom/mosaic-messages/-/mosaic-messages-0.50.0.tgz#8e865788671ccd58e2d20d70fc8fd396f665cbc8"
   integrity sha512-hzF7FRV0FZeh0Bm/oPZ4KDfB4uD1kuL44MxpD1ecE0g2X/33HbSzfZB9M4o6Uc63SVw71fSCyCaZ5ffRyW9JTg==
 
-"@axinom/mosaic-portal@0.38.0":
-  version "0.38.0"
-  resolved "https://registry.yarnpkg.com/@axinom/mosaic-portal/-/mosaic-portal-0.38.0.tgz#aadaf8ee035c99acc31baaffac4168b9e6b3331a"
-  integrity sha512-R+MCA3NqJxvyjS1OtKl+pmtk1j+03I9HJDDj17Jg/2rnoI4zn+Uqs3lNcKh1u6JMG+8pzb/HNPfspE1l7jKYsw==
+"@axinom/mosaic-portal@0.38.1":
+  version "0.38.1"
+  resolved "https://registry.yarnpkg.com/@axinom/mosaic-portal/-/mosaic-portal-0.38.1.tgz#bf1737a9f7edb251dcf5720c0484c7c01695ec5e"
+  integrity sha512-pyxw0Acrl8IjL4dRK4btSe/c/hiD7JoqCyWQ9bcGaZHpHdArqua3fAu8984j39woP2RUt5ToJ1j2cAfUEOzvIA==
 
 "@axinom/mosaic-service-common@0.56.0", "@axinom/mosaic-service-common@^0.56.0":
   version "0.56.0"
