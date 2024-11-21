@@ -54,7 +54,6 @@
     "@axinom/mosaic-service-common": "0.55.0",
     "@axinom/mosaic-transactional-inbox-outbox": "0.15.0",
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
-    "amqplib": "^0.6.0",
     "dotenv": "^8.6.0",
     "env-cmd": "^10.1.0",
     "env-var": "^6.3.0",
