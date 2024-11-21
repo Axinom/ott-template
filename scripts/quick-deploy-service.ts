@@ -4,9 +4,11 @@ import axios from 'axios';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { from } from 'env-var';
+import * as fs from 'fs';
 import { readFileSync } from 'fs';
 import gql from 'graphql-tag';
 import { print } from 'graphql/language/printer';
+import * as path from 'path';
 import { prompt } from 'prompts';
 
 /**
@@ -166,11 +168,19 @@ const getServiceDefinitionID = async (
  * Validate if the deployment manifest YAML file of the service still has some variables that need to be manually adjusted.
  */
 function validateDeploymentManifestIsModified(
-  serviceId: 'media-service' | 'catalog-service' | 'entitlement-service',
+  serviceId:
+    | 'media-service'
+    | 'catalog-service'
+    | 'entitlement-service'
+    | 'channel-service'
+    | 'vod-to-live-service',
 ): void {
   const servicePrefix = serviceId.split('-service')[0];
 
   const deploymentManifestFilePath = `./services/${servicePrefix}/service/mosaic-hosting-deployment-manifest.yaml`;
+
+  console.log(deploymentManifestFilePath);
+
   const fileContent = readFileSync(deploymentManifestFilePath).toString();
   if (fileContent.includes(`'REPLACE_WITH_VALID_`)) {
     throw new Error(
@@ -180,7 +190,8 @@ Please follow the service README file to understand how to generate the values, 
   }
 }
 
-function getDockerInfo(): { registry: string; username: string } {
+// Function to get Docker data from DockerInfo
+function getDockerInfo(): { registry?: string; username?: string } {
   console.log(`\nChecking Docker Info...\n`);
 
   try {
@@ -190,11 +201,11 @@ function getDockerInfo(): { registry: string; username: string } {
 
     const registry = dockerInfo
       .filter((line) => line.startsWith('Registry: '))[0]
-      .split('Registry: ')[1];
+      ?.split('Registry: ')[1];
 
     const username = dockerInfo
       .filter((line) => line.startsWith('Username: '))[0]
-      .split('Username: ')[1];
+      ?.split('Username: ')[1];
 
     return { registry, username };
   } catch (error) {
@@ -204,15 +215,110 @@ function getDockerInfo(): { registry: string; username: string } {
   }
 }
 
+// Function to get Docker username from config.json
+async function getUsernameFromDockerConfig(): Promise<string | undefined> {
+  // Checks both the primary and fallback paths for Docker config files.
+  const primaryPath = path.join(
+    process.env.HOME || process.env.USERPROFILE || '',
+    '.docker',
+    'config.json',
+  );
+  const fallbackPath = path.join(
+    process.env.HOME || process.env.USERPROFILE || '',
+    'snap',
+    'docker',
+    'current',
+    '.docker',
+    'config.json',
+  );
+
+  const configPaths = [primaryPath, fallbackPath];
+
+  for (const configPath of configPaths) {
+    try {
+      if (fs.existsSync(configPath)) {
+        const fileContent = fs.readFileSync(configPath, 'utf8');
+        const config = JSON.parse(fileContent);
+
+        const auths = config.auths;
+        if (!auths) {
+          throw new Error('No [auths] section found in Docker config.json');
+        }
+
+        const usernames: { registry: string; username: string }[] = [];
+
+        for (const registry in auths) {
+          if (Object.prototype.hasOwnProperty.call(auths, registry)) {
+            const auth = auths[registry];
+            if (auth.username) {
+              usernames.push({ registry, username: auth.username });
+            }
+
+            if (auth.auth) {
+              const [username] = Buffer.from(auth.auth, 'base64')
+                .toString()
+                .split(':');
+              usernames.push({ registry, username });
+            }
+          }
+        }
+
+        // If multiple username found, it prompts the user to select one.
+        if (usernames.length === 1) {
+          return usernames[0].username;
+        } else if (usernames.length > 1) {
+          const answers = await prompt([
+            {
+              type: 'select',
+              name: 'selectedUsername',
+              message: 'Multiple Docker usernames found. Please select one:',
+              choices: usernames.map((item) => ({
+                title: `${item.username} (${item.registry})`,
+                value: item.username,
+              })),
+            },
+          ]);
+
+          return answers.selectedUsername;
+        }
+      }
+    } catch (error) {
+      console.error(`Error reading Docker config.json from ${configPath}`);
+    }
+  }
+
+  // If username is not found in config files, it prompts the user to manually enter the registry and username.
+  const answers = await prompt([
+    {
+      type: 'text',
+      name: 'registry',
+      message: 'Enter Docker registry:',
+      initial: 'https://index.docker.io/v1/',
+    },
+    {
+      type: 'text',
+      name: 'username',
+      initial: 'Enter Docker username:',
+    },
+  ]);
+
+  return answers.username;
+}
+
 function buildDockerImageAndPush(
   username: string,
-  serviceId: 'media-service' | 'catalog-service' | 'entitlement-service',
+  serviceId:
+    | 'media-service'
+    | 'catalog-service'
+    | 'entitlement-service'
+    | 'channel-service'
+    | 'vod-to-live-service',
   uniqueID: string,
 ): void {
   const servicePrefix = serviceId.split('-service')[0];
   const imageTag = `${username}/${serviceId}:${uniqueID}`;
 
-  const dockerBuildCommand = `docker build -t ${imageTag} --build-arg PACKAGE_ROOT=services/${servicePrefix}/service --build-arg PACKAGE_BUILD_COMMAND=build:${serviceId}:prod .`;
+  const dockerBuildCommand = `docker build -t ${imageTag} --build-arg PACKAGE_ROOT=services/${servicePrefix}/service --build-arg PACKAGE_BUILD_COMMAND=build:${serviceId}:prod --platform linux/amd64 .`;
 
   console.log(
     `\nRunning Docker Build command:\n${chalk.green(dockerBuildCommand)}\n`,
@@ -220,16 +326,27 @@ function buildDockerImageAndPush(
 
   execSync(dockerBuildCommand, { stdio: 'inherit' });
 
-  const dockerPushCommand = `docker push ${imageTag}`;
+  try {
+    const dockerPushCommand = `docker push ${imageTag}`;
 
-  console.log(
-    `\nRunning Docker Push command:\n${chalk.green(dockerPushCommand)}\n`,
-  );
+    console.log(
+      `\nRunning Docker Push command:\n${chalk.green(dockerPushCommand)}\n`,
+    );
 
-  execSync(dockerPushCommand, { stdio: 'inherit' });
+    execSync(dockerPushCommand, { stdio: 'inherit' });
+  } catch (error) {
+    console.log(
+      `\nError running Docker Push command:\n${chalk.red(
+        'Please make sure you are logged in to the Docker Hub Registry.',
+      )}\n`,
+    );
+    throw new Error('Unable to push docker image to repository.');
+  }
 }
 
-function buildPiletAndRegister(serviceId: 'media-service'): void {
+function buildPiletAndRegister(
+  serviceId: 'media-service' | 'channel-service',
+): void {
   const servicePrefix = serviceId.split('-service')[0];
 
   const piletBuildCommand = `yarn build:${servicePrefix}-workflows:prod`;
@@ -250,7 +367,12 @@ function buildPiletAndRegister(serviceId: 'media-service'): void {
 }
 
 function uploadDeploymentManifest(
-  serviceId: 'media-service' | 'catalog-service' | 'entitlement-service',
+  serviceId:
+    | 'media-service'
+    | 'catalog-service'
+    | 'entitlement-service'
+    | 'channel-service'
+    | 'vod-to-live-service',
   uniqueID: string,
 ): void {
   const servicePrefix = serviceId.split('-service')[0];
@@ -267,13 +389,22 @@ function uploadDeploymentManifest(
 }
 
 function initiateDeployment(
-  serviceId: 'media-service' | 'catalog-service' | 'entitlement-service',
+  serviceId:
+    | 'media-service'
+    | 'catalog-service'
+    | 'entitlement-service'
+    | 'channel-service'
+    | 'vod-to-live-service',
   dockerImageTag: string,
   uniqueID: string,
 ): void {
-  const deployCommand = `yarn util:load-vars mosaic hosting service deploy -i ${serviceId} -t ${dockerImageTag} ${
-    serviceId === 'media-service' ? '-p media-workflows@1.0.0' : ''
-  } -m ${serviceId}-manifest-${uniqueID} -n ${serviceId}-deployment-${uniqueID}`;
+  const workflows =
+    serviceId === 'media-service'
+      ? '-p media-workflows@1.0.0'
+      : serviceId === 'channel-service'
+      ? '-p channel-workflows@1.0.0'
+      : '';
+  const deployCommand = `yarn util:load-vars mosaic hosting service deploy -i ${serviceId} -t ${dockerImageTag} ${workflows} -m ${serviceId}-manifest-${uniqueID} -n ${serviceId}-deployment-${uniqueID}`;
 
   console.log(`\nRunning Deploy command:\n${chalk.green(deployCommand)}\n`);
 
@@ -315,6 +446,9 @@ function printAdminPortalURL(serviceDefinitionId: string): void {
 
 async function main(): Promise<void> {
   try {
+    const username =
+      getDockerInfo().username ?? (await getUsernameFromDockerConfig());
+
     const answers = await prompt([
       {
         type: 'select',
@@ -324,7 +458,19 @@ async function main(): Promise<void> {
           { title: 'Media Service', value: 'media-service' },
           { title: 'Catalog Service', value: 'catalog-service' },
           { title: 'Entitlement Service', value: 'entitlement-service' },
+          { title: 'Channel Service', value: 'channel-service' },
+          { title: 'VOD-to-Live Service', value: 'vod-to-live-service' },
         ],
+      },
+      {
+        type: 'text',
+        name: 'dockerUsername',
+        message: 'Enter the Docker username',
+        initial: username,
+        validate: (value: string) =>
+          value === undefined || value === ''
+            ? 'A Docker username is required to continue with the deployment. Please provide a value.'
+            : true,
       },
       {
         type: 'text',
@@ -347,16 +493,15 @@ async function main(): Promise<void> {
     } else {
       const uniqueID = getUniqueID();
 
-      const { registry, username } = getDockerInfo();
-
-      console.log(`Docker Registry: ${chalk.green(registry)}`);
-      console.log(`Docker Username: ${chalk.green(username)}`);
-
       validateDeploymentManifestIsModified(answers.serviceId);
 
       const token = await getAccessToken();
 
-      await ensureServiceDefinitionExists(token, answers.serviceId, username);
+      await ensureServiceDefinitionExists(
+        token,
+        answers.serviceId,
+        answers.dockerUsername,
+      );
 
       const serviceDefinitionId = await getServiceDefinitionID(
         token,
@@ -364,14 +509,21 @@ async function main(): Promise<void> {
       );
 
       if (answers.dockerImageTag === '') {
-        buildDockerImageAndPush(username, answers.serviceId, uniqueID);
+        buildDockerImageAndPush(
+          answers.dockerUsername,
+          answers.serviceId,
+          uniqueID,
+        );
       } else {
         console.log(
           `\nUsing the pre-built and pushed docker image [${answers.dockerImageTag}]. Skipping building the backend.`,
         );
       }
 
-      if (answers.serviceId === 'media-service') {
+      if (
+        answers.serviceId === 'media-service' ||
+        answers.serviceId === 'channel-service'
+      ) {
         buildPiletAndRegister(answers.serviceId);
       }
 
