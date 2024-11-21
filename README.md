@@ -197,9 +197,16 @@ yarn run pilet publish --no-fresh --url "https://frontends.service.eu.axinom.net
 ```
 
 Please note, that you need to provide the 'Base64 Encoded Credentials' of a
-service account that has the `Pilets: Publish` permissions as `api-key`. This
+[service account](https://docs.axinom.com/platform/core/identity/authenticate-serviceaccount/#what-is-a-service-account) 
+that has the `Pilets: Publish` permissions under the "Micro Frontend Service" as `api-key`. This
 value will be shown to you alongside with the other secrets when creating a
 service account or when generating new secrets for an existing account.
+
+For authentication, you need a Client ID and Client Secret of this service account. 
+
+If you have both values, the API key is just base64($clientid:$clientSecret). For 
+base64 you can use a tool in our Portal: https://portal.axinom.com/mosaic/tools/base64 
+(or any other base64 tool).
 
 Also make sure that you define all values the pilet expects to receive inside
 the `app.meta.custom` by providing them as additional parameters on this command
