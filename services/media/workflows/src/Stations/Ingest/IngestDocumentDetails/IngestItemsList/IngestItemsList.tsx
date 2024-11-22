@@ -31,7 +31,7 @@ export const IngestItemsList: React.FC<IngestItemsListProps> = ({ items }) => {
   >([]);
 
   const [filter, setFilter] = useState<IngestItemStatus[]>([]);
-  const filterInitialized = useRef(false);
+  const filterTouched = useRef(false);
 
   useEffect(() => {
     const statuses = new Set<IngestItemStatus>();
@@ -44,9 +44,8 @@ export const IngestItemsList: React.FC<IngestItemsListProps> = ({ items }) => {
         };
       }),
     ]);
-    if (!filterInitialized.current && statuses.size > 0) {
-      // initialize filters only once, not on every data update
-      filterInitialized.current = true;
+    if (!filterTouched.current && statuses.size > 0) {
+      // re-initialize filter if it was not touched
       setFilter([...statuses]);
     }
   }, [items]);
@@ -61,7 +60,10 @@ export const IngestItemsList: React.FC<IngestItemsListProps> = ({ items }) => {
           inlineMode={true}
           tagsOptions={filterOptions}
           value={filter}
-          onChange={(value) => setFilter(value.currentTarget.value as any)}
+          onChange={(value) => {
+            setFilter(value.currentTarget.value as any);
+            filterTouched.current = true;
+          }}
           displayKey="label"
           valueKey="value"
           dropDownLabel="Add filter"
