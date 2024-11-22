@@ -44,9 +44,21 @@ export const IngestItemsList: React.FC<IngestItemsListProps> = ({ items }) => {
         };
       }),
     ]);
+
     if (!filterTouched.current && statuses.size > 0) {
       // re-initialize filter if it was not touched
       setFilter([...statuses]);
+    } else if (statuses.size > 0) {
+      setFilter((prev) => {
+        const selected = prev.filter((f) => statuses.has(f));
+        if (selected.length > 0) {
+          // keep the selected filters if they are still available
+          return selected;
+        } else {
+          // otherwise return all statuses
+          return [...statuses];
+        }
+      });
     }
   }, [items]);
 
