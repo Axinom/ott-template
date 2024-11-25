@@ -208,7 +208,7 @@ Please note, that you need to provide the 'Base64 Encoded Credentials' of a
 as the value of `api-key`. 
 
 If you have the plaintext Client ID & the Client Secret of the service account, 
-you can generate the base64($clientid:$clientSecret) to be used as the `api-key` 
+you can generate the `base64($clientid:$clientSecret)` to be used as the `api-key` 
 using a BASE64 generator tool, such as:: https://portal.axinom.com/mosaic/tools/base64.
 
 Also make sure that you define all values the pilet expects to receive inside
