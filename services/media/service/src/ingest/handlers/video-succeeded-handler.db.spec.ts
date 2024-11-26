@@ -99,6 +99,7 @@ describe('VideoSucceededHandler', () => {
       const payload: EnsureVideoExistsCreationStartedEvent = {
         video_id: '6804e7ff-8bed-42b2-85bf-c1ca5b59c417',
         encoding_state: 'IN_PROGRESS',
+        video_location: 'test',
       };
       const context = {
         ingestItemStepId: step1.id,
@@ -155,6 +156,7 @@ describe('VideoSucceededHandler', () => {
       const payload: EnsureVideoExistsCreationStartedEvent = {
         video_id: '6804e7ff-8bed-42b2-85bf-c1ca5b59c417',
         encoding_state: 'IN_PROGRESS',
+        video_location: 'test',
       };
       const context = {
         ingestItemStepId: step1.id,
