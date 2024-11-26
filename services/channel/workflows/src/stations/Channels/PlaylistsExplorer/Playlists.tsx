@@ -23,6 +23,7 @@ import {
 } from '../../../generated/graphql';
 import { publicationStateMap } from '../../../util/Publishing/publicationStateMap';
 import { PlaylistDetailsQuickEdit } from '../PlaylistDetails/PlaylistDetailsQuickEdit';
+import { PlaylistPublishingQuickEdit } from '../PlaylistPublishing/PlaylistPublishingQuickEdit';
 import { ProgramManagementQuickEdit } from '../ProgramManagement/ProgramManagementQuickEdit';
 import { routes } from '../routes';
 import { filterOptions, transformFilters } from './Playlists.filters';
@@ -194,6 +195,15 @@ export const Playlists: React.FC = () => {
           label: 'Programs',
           generateDetailsLink: (item) =>
             routes.generate(routes.programs, {
+              channelId,
+              playlistId: item.id,
+            }),
+        },
+        {
+          component: <PlaylistPublishingQuickEdit />,
+          label: 'Publishing Validation',
+          generateDetailsLink: (item) =>
+            routes.generate(routes.playlistPublishing, {
               channelId,
               playlistId: item.id,
             }),

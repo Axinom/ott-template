@@ -95,6 +95,7 @@ describe('ImageSucceededHandler', () => {
       // Arrange
       const payload: EnsureImageExistsImageCreatedEvent = {
         image_id: '11e1d903-49ed-4d70-8b24-90d0824741d0',
+        image_location: 'test',
       };
       const metadata = {
         ingestItemStepId: step1.id,
@@ -150,6 +151,7 @@ describe('ImageSucceededHandler', () => {
       // Arrange
       const payload: EnsureImageExistsImageCreatedEvent = {
         image_id: '11e1d903-49ed-4d70-8b24-90d0824741d0',
+        image_location: 'test',
       };
       const context = {
         ingestItemStepId: step1.id,
