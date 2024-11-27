@@ -6,7 +6,7 @@ ARG PACKAGE_ROOT
 ARG PACKAGE_BUILD_COMMAND
 
 # BASE
-FROM node:18-buster-slim AS base
+FROM node:18.18-buster-slim AS base
 WORKDIR /checkout
 
 ARG PACKAGE_ROOT
@@ -30,7 +30,7 @@ RUN mkdir -p "$PACKAGE_ROOT/node_modules"
 RUN if [ ! -d /checkout/$PACKAGE_ROOT/migrations ]; then mkdir -p /checkout/$PACKAGE_ROOT/migrations; fi
 
 # RELEASE
-FROM node:18-buster-slim
+FROM node:18.18-buster-slim
 
 ARG PACKAGE_ROOT
 ARG PACKAGE_BUILD_COMMAND
