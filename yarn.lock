@@ -2085,13 +2085,6 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dbeining/react-atom@^4.1.21":
-  version "4.1.21"
-  resolved "https://registry.yarnpkg.com/@dbeining/react-atom/-/react-atom-4.1.21.tgz#94ae9033fc1ddaa309db1b9e52b24f0088ccf87c"
-  integrity sha512-lHAyDaIlLpcx5hl6YOv6FFxODOE+Qa2nsvA/oAlk4dv7AWR6hbb3nBU6naaOwFVY3l7urBPJezmNxI/Pixo1Pg==
-  dependencies:
-    "@libre/atom" "^1.3.2"
-
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz#a23514e8fb9af1269d5f7788aa556798d61c6b59"
@@ -3680,11 +3673,6 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
-
-"@libre/atom@^1.3.2", "@libre/atom@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@libre/atom/-/atom-1.3.3.tgz#b14e5fdac836e281d7206d19255c798a50046816"
-  integrity sha1-sU5f2sg24oHXIG0ZJVx5ilAEaBY=
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -9035,7 +9023,7 @@ hexoid@^1.0.0:
   resolved "https://registry.yarnpkg.com/hexoid/-/hexoid-1.0.0.tgz#ad10c6573fb907de23d9ec63a711267d9dc9bc18"
   integrity sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==
 
-history@^4.10.1, history@^4.9.0:
+history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
   integrity sha1-MzcaZeOoOyZ0NOKz87G0xYqtTPM=
