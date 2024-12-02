@@ -195,11 +195,21 @@ To deploy the workflows into an environment run a command like:
 ```sh
 yarn run pilet publish --no-fresh --url "https://frontends.service.eu.axinom.net/v1/pilets/{tenantId}/{environmentId}" --api-key "{serviceAccountCredentials}" {packageFile}
 ```
+You need a Client ID and Client Secret of a service account to run this command.
+
+This service account must contain the `Pilets: Publish` 
+permission under the "Micro Frontend Service" in order to be authorized to perform 
+the action of publishing the workflows. Client ID and Client Secret will be shown 
+to you alongside with the other secrets when creating a service account or when 
+generating new secrets for an existing account.
 
 Please note, that you need to provide the 'Base64 Encoded Credentials' of a
-service account that has the `Pilets: Publish` permissions as `api-key`. This
-value will be shown to you alongside with the other secrets when creating a
-service account or when generating new secrets for an existing account.
+[service account](https://docs.axinom.com/platform/core/identity/authenticate-serviceaccount/#what-is-a-service-account) 
+as the value of `api-key`. 
+
+If you have the plaintext Client ID & the Client Secret of the service account, 
+you can generate the `base64($clientid:$clientSecret)` to be used as the `api-key` 
+using a BASE64 generator tool, such as:: https://portal.axinom.com/mosaic/tools/base64.
 
 Also make sure that you define all values the pilet expects to receive inside
 the `app.meta.custom` by providing them as additional parameters on this command
