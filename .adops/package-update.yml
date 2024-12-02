@@ -28,7 +28,9 @@ steps:
     clean: true
     persistCredentials: true
 
-  - script: git checkout $(buildSourceBranch)
+  - script: |
+      git fetch
+      git checkout $(buildSourceBranch)
     displayName: 'Check out $(buildSourceBranch)'
     condition:
       and(succeeded(), not(eq(variables['Build.Reason'], 'PullRequest')))
