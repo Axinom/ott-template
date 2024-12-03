@@ -4,12 +4,6 @@ pr:
   branches:
     include:
       - dev
-  paths:
-    include:
-      - libs/*
-      - services/*
-    exclude:
-      - .adops/*
 
 pool:
   name: 'Mosaic Auto Tests Cloud'
