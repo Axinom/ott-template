@@ -1,8 +1,15 @@
 trigger: none
 
 pr:
-  - main
-  - dev
+  branches:
+    include:
+      - dev
+  paths:
+    include:
+      - libs/*
+      - services/*
+    exclude:
+      - .adops/*
 
 pool:
   name: 'Mosaic Auto Tests Cloud'
