@@ -1,8 +1,9 @@
 trigger: none
 
 pr:
-  - main
-  - dev
+  branches:
+    include:
+      - dev
 
 pool:
   name: 'Mosaic Auto Tests Cloud'
