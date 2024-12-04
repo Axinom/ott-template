@@ -14,7 +14,7 @@
     "dev": "concurrently --names \"codegen,tsc\" \"yarn codegen:watch\" \"yarn build:compile -w\"",
     "clean": "rimraf dist",
     "codegen": "yarn codegen:lint:schema && yarn codegen:clean:generated && yarn mosaic msg-codegen -i schemas -o src/generated",
-    "codegen:watch": "watch \"yarn codegen\" schemas/",
+    "codegen:watch": "chokidar \"schemas/\" --initial -c \"yarn codegen\"",
     "codegen:clean:generated": "rimraf src/generated",
     "codegen:lint:schema": "yarn mosaic msg-codegen -i schemas --lint",
     "build": "yarn clean && yarn codegen && yarn build:compile",
@@ -24,11 +24,11 @@
     "@axinom/mosaic-cli": "0.40.0",
     "@axinom/mosaic-message-bus-abstractions": "0.21.0",
     "@types/glob": "^7.2.0",
+    "chokidar-cli": "^3.0.0",
     "concurrently": "^5.3.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsc-watch": "^4.6.2",
-    "typescript": "^4.9.4",
-    "watch": "^1.0.2"
+    "typescript": "^4.9.4"
   }
 }
