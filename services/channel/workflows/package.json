@@ -37,7 +37,7 @@
     "i18n-iso-countries": "^6.8.0",
     "react-beautiful-dnd": "^13.1.1",
     "uuid": "^9.0.0",
-    "yup": "^0.32.11"
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@axinom/mosaic-portal": "0.38.1",
