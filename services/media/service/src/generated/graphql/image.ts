@@ -1453,15 +1453,12 @@ export type Mutation = {
   deleteImageUploadWebhookConfiguration: DeleteImageUploadWebhookConfigurationPayload;
   /** Generate a new image upload webhook secret for signing. */
   generateImageUploadWebhookSecret: GenerateImageUploadWebhookSecretPayload;
-  populateImages?: Maybe<PopulatePayload>;
-  populateImageTypes?: Maybe<PopulatePayload>;
   setAmazonS3AcquisitionProfile: ImageAcquisitionProfile;
   setAzureBlobAcquisitionProfile: ImageAcquisitionProfile;
   /** Mutation to set General Settings in Image Service. */
   setGeneralSettings: GeneralSetting;
   setHostingAzureAcquisitionProfile: ImageAcquisitionProfile;
   startImagesDeletion?: Maybe<BulkMutationUuidPayload>;
-  truncateImages?: Maybe<TruncateImagesPayload>;
   unarchiveImages?: Maybe<BulkMutationUuidPayload>;
   updateAmazonS3AcquisitionProfile: ImageAcquisitionProfile;
   updateAzureBlobAcquisitionProfile: ImageAcquisitionProfile;
@@ -1495,12 +1492,6 @@ export type MutationDeleteImageArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteImagesTagArgs = {
   input: DeleteImagesTagInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationPopulateImagesArgs = {
-  input: PopulateInput;
 };
 
 
@@ -1586,18 +1577,6 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['Cursor']>;
-};
-
-export type PopulateInput = {
-  count: Scalars['Int'];
-  includeImageFiles?: InputMaybe<Scalars['Boolean']>;
-  includeTags?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type PopulatePayload = {
-  __typename?: 'PopulatePayload';
-  count: Scalars['Int'];
-  query?: Maybe<Query>;
 };
 
 /** The root query type which gives access points into the data universe. */
@@ -1859,11 +1838,6 @@ export type Subscription = {
   __typename?: 'Subscription';
   /** Triggered when a Image is mutated (insert, update or delete).  */
   imageMutated?: Maybe<ImageSubscriptionPayload>;
-};
-
-export type TruncateImagesPayload = {
-  __typename?: 'TruncateImagesPayload';
-  completed: Scalars['Boolean'];
 };
 
 export type UpdateAmazonS3AcquisitionProfileInput = {

@@ -18,7 +18,33 @@ export type Scalars = {
   Datetime: any;
 };
 
-/** Definition of the channel publish format. */
+/** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
+export type BooleanFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Scalars['Boolean']>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Scalars['Boolean']>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Scalars['Boolean']>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Scalars['Boolean']>;
+  /** Included in the specified list. */
+  in?: InputMaybe<Array<Scalars['Boolean']>>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Scalars['Boolean']>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Scalars['Boolean']>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Scalars['Boolean']>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Scalars['Boolean']>;
+  /** Not included in the specified list. */
+  notIn?: InputMaybe<Array<Scalars['Boolean']>>;
+};
+
+/** Definition of the channel entity. */
 export type Channel = {
   __typename?: 'Channel';
   /** DASH stream URL of the channel. */
@@ -32,12 +58,14 @@ export type Channel = {
   images: ChannelImagesConnection;
   /** Key identifier for DRM protected streams. */
   keyId?: Maybe<Scalars['String']>;
+  /** Reads and enables pagination through a set of `Playlist`. */
+  playlists: PlaylistsConnection;
   /** Title of the channel. */
-  title: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
 };
 
 
-/** Definition of the channel publish format. */
+/** Definition of the channel entity. */
 export type ChannelImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -49,10 +77,25 @@ export type ChannelImagesArgs = {
   orderBy?: InputMaybe<Array<ChannelImagesOrderBy>>;
 };
 
+
+/** Definition of the channel entity. */
+export type ChannelPlaylistsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<PlaylistCondition>;
+  filter?: InputMaybe<PlaylistFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
+};
+
 /** A condition to be used against `Channel` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type ChannelCondition = {
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Channel` object types. All fields are combined with a logical ‘and.’ */
@@ -65,11 +108,14 @@ export type ChannelFilter = {
   not?: InputMaybe<ChannelFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<ChannelFilter>>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
 /** Asset image metadata. */
 export type ChannelImage = {
   __typename?: 'ChannelImage';
+  altText?: Maybe<Scalars['String']>;
   /** Reads a single `Channel` that is related to this `ChannelImage`. */
   channel?: Maybe<Channel>;
   channelId?: Maybe<Scalars['String']>;
@@ -89,6 +135,8 @@ export type ChannelImage = {
  * tested for equality and combined with a logical ‘and.’
  */
 export type ChannelImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `channelId` field. */
   channelId?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
@@ -97,6 +145,8 @@ export type ChannelImageCondition = {
 
 /** A filter to be used against `ChannelImage` object types. All fields are combined with a logical ‘and.’ */
 export type ChannelImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<ChannelImageFilter>>;
   /** Filter by the object’s `channelId` field. */
@@ -133,6 +183,8 @@ export type ChannelImagesEdge = {
 
 /** Methods to use when ordering `ChannelImage`. */
 export enum ChannelImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   ChannelIdAsc = 'CHANNEL_ID_ASC',
   ChannelIdDesc = 'CHANNEL_ID_DESC',
   IdAsc = 'ID_ASC',
@@ -170,10 +222,12 @@ export enum ChannelsOrderBy {
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
-/** Definition of the collection publish format. */
+/** Definition of the collection entity. */
 export type Collection = {
   __typename?: 'Collection';
   /** Longer description. */
@@ -192,7 +246,7 @@ export type Collection = {
 };
 
 
-/** Definition of the collection publish format. */
+/** Definition of the collection entity. */
 export type CollectionImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -205,7 +259,7 @@ export type CollectionImagesArgs = {
 };
 
 
-/** Definition of the collection publish format. */
+/** Definition of the collection entity. */
 export type CollectionItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -224,6 +278,8 @@ export type CollectionItemsArgs = {
 export type CollectionCondition = {
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Collection` object types. All fields are combined with a logical ‘and.’ */
@@ -236,11 +292,14 @@ export type CollectionFilter = {
   not?: InputMaybe<CollectionFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<CollectionFilter>>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
 /** Asset image metadata. */
 export type CollectionImage = {
   __typename?: 'CollectionImage';
+  altText?: Maybe<Scalars['String']>;
   /** Reads a single `Collection` that is related to this `CollectionImage`. */
   collection?: Maybe<Collection>;
   collectionId?: Maybe<Scalars['String']>;
@@ -260,6 +319,8 @@ export type CollectionImage = {
  * tested for equality and combined with a logical ‘and.’
  */
 export type CollectionImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `collectionId` field. */
   collectionId?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
@@ -268,6 +329,8 @@ export type CollectionImageCondition = {
 
 /** A filter to be used against `CollectionImage` object types. All fields are combined with a logical ‘and.’ */
 export type CollectionImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<CollectionImageFilter>>;
   /** Filter by the object’s `collectionId` field. */
@@ -304,6 +367,8 @@ export type CollectionImagesEdge = {
 
 /** Methods to use when ordering `CollectionImage`. */
 export enum CollectionImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   CollectionIdAsc = 'COLLECTION_ID_ASC',
   CollectionIdDesc = 'COLLECTION_ID_DESC',
   IdAsc = 'ID_ASC',
@@ -452,10 +517,12 @@ export enum CollectionsOrderBy {
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
-/** Definition of the TV show episode publish format. */
+/** Definition of the TV show episode entity. */
 export type Episode = {
   __typename?: 'Episode';
   /** Cast of the episode. */
@@ -493,7 +560,7 @@ export type Episode = {
 };
 
 
-/** Definition of the TV show episode publish format. */
+/** Definition of the TV show episode entity. */
 export type EpisodeGenresArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -506,7 +573,7 @@ export type EpisodeGenresArgs = {
 };
 
 
-/** Definition of the TV show episode publish format. */
+/** Definition of the TV show episode entity. */
 export type EpisodeImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -519,7 +586,7 @@ export type EpisodeImagesArgs = {
 };
 
 
-/** Definition of the TV show episode publish format. */
+/** Definition of the TV show episode entity. */
 export type EpisodeLicensesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -532,7 +599,7 @@ export type EpisodeLicensesArgs = {
 };
 
 
-/** Definition of the TV show episode publish format. */
+/** Definition of the TV show episode entity. */
 export type EpisodeVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -550,6 +617,8 @@ export type EpisodeCondition = {
   id?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `seasonId` field. */
   seasonId?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Episode` object types. All fields are combined with a logical ‘and.’ */
@@ -564,6 +633,8 @@ export type EpisodeFilter = {
   or?: InputMaybe<Array<EpisodeFilter>>;
   /** Filter by the object’s `seasonId` field. */
   seasonId?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
 export type EpisodeGenresRelation = {
@@ -651,6 +722,7 @@ export enum EpisodeGenresRelationsOrderBy {
 /** Asset image metadata. */
 export type EpisodeImage = {
   __typename?: 'EpisodeImage';
+  altText?: Maybe<Scalars['String']>;
   /** Reads a single `Episode` that is related to this `EpisodeImage`. */
   episode?: Maybe<Episode>;
   episodeId?: Maybe<Scalars['String']>;
@@ -670,6 +742,8 @@ export type EpisodeImage = {
  * tested for equality and combined with a logical ‘and.’
  */
 export type EpisodeImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `episodeId` field. */
   episodeId?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
@@ -678,6 +752,8 @@ export type EpisodeImageCondition = {
 
 /** A filter to be used against `EpisodeImage` object types. All fields are combined with a logical ‘and.’ */
 export type EpisodeImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<EpisodeImageFilter>>;
   /** Filter by the object’s `episodeId` field. */
@@ -714,6 +790,8 @@ export type EpisodeImagesEdge = {
 
 /** Methods to use when ordering `EpisodeImage`. */
 export enum EpisodeImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   EpisodeIdAsc = 'EPISODE_ID_ASC',
   EpisodeIdDesc = 'EPISODE_ID_DESC',
   IdAsc = 'ID_ASC',
@@ -826,7 +904,9 @@ export enum EpisodesOrderBy {
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
   SeasonIdAsc = 'SEASON_ID_ASC',
-  SeasonIdDesc = 'SEASON_ID_DESC'
+  SeasonIdDesc = 'SEASON_ID_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
 /** Video stream metadata. */
@@ -1136,6 +1216,8 @@ export enum EpisodeVideoStreamsOrderBy {
 export enum ErrorCodesEnum {
   /** The assertion check for the identifier %s failed. */
   AssertionFailed = 'ASSERTION_FAILED',
+  /** A database operation has failed because of a lock timeout. */
+  DatabaseLockTimeoutError = 'DATABASE_LOCK_TIMEOUT_ERROR',
   /** An authorization database error has occurred. The user might not have enough permissions. */
   DatabasePermissionsCheckFailed = 'DATABASE_PERMISSIONS_CHECK_FAILED',
   /** An expected and handled database constraint error has occurred. The actual message will have more information. */
@@ -1150,12 +1232,20 @@ export enum ErrorCodesEnum {
   LicenseIsNotValid = 'LICENSE_IS_NOT_VALID',
   /** The %s does not have a license. */
   LicenseNotFound = 'LICENSE_NOT_FOUND',
+  /** The %s is missing required properties: %s. */
+  ObjectIsMissingProperties = 'OBJECT_IS_MISSING_PROPERTIES',
   /** An application startup error has occurred. The actual message will have more information. */
   StartupError = 'STARTUP_ERROR',
+  /** Unexpected null or undefined value received. */
+  UnexpectedNullUndefined = 'UNEXPECTED_NULL_UNDEFINED',
   /** An unhandled database-related error has occurred. Please contact the service support. */
   UnhandledDatabaseError = 'UNHANDLED_DATABASE_ERROR',
   /** An unhandled error has occurred. Please contact the service support. */
-  UnhandledError = 'UNHANDLED_ERROR'
+  UnhandledError = 'UNHANDLED_ERROR',
+  /** Attempt to create or update an element failed, as it would have resulted in a duplicate element. */
+  UniqueConstraintError = 'UNIQUE_CONSTRAINT_ERROR',
+  /** The %s is not an object. */
+  ValueIsNotObject = 'VALUE_IS_NOT_OBJECT'
 }
 
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
@@ -1184,7 +1274,68 @@ export type IntFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-/** Definition of the movie publish format. */
+export type Locale = {
+  __typename?: 'Locale';
+  isDefault: Scalars['Boolean'];
+  locale: Scalars['String'];
+};
+
+/** A condition to be used against `Locale` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type LocaleCondition = {
+  /** Checks for equality with the object’s `isDefault` field. */
+  isDefault?: InputMaybe<Scalars['Boolean']>;
+  /** Checks for equality with the object’s `locale` field. */
+  locale?: InputMaybe<Scalars['String']>;
+};
+
+/** A filter to be used against `Locale` object types. All fields are combined with a logical ‘and.’ */
+export type LocaleFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<LocaleFilter>>;
+  /** Filter by the object’s `isDefault` field. */
+  isDefault?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `locale` field. */
+  locale?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<LocaleFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<LocaleFilter>>;
+};
+
+/** A connection to a list of `Locale` values. */
+export type LocalesConnection = {
+  __typename?: 'LocalesConnection';
+  /** A list of edges which contains the `Locale` and cursor to aid in pagination. */
+  edges: Array<LocalesEdge>;
+  /** A list of `Locale` objects. */
+  nodes: Array<Locale>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Locale` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `Locale` edge in the connection. */
+export type LocalesEdge = {
+  __typename?: 'LocalesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Locale` at the end of the edge. */
+  node: Locale;
+};
+
+/** Methods to use when ordering `Locale`. */
+export enum LocalesOrderBy {
+  IsDefaultAsc = 'IS_DEFAULT_ASC',
+  IsDefaultDesc = 'IS_DEFAULT_DESC',
+  LocaleAsc = 'LOCALE_ASC',
+  LocaleDesc = 'LOCALE_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+/** Definition of the movie entity. */
 export type Movie = {
   __typename?: 'Movie';
   /** Cast of the movie. */
@@ -1217,7 +1368,7 @@ export type Movie = {
 };
 
 
-/** Definition of the movie publish format. */
+/** Definition of the movie entity. */
 export type MovieGenresArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -1230,7 +1381,7 @@ export type MovieGenresArgs = {
 };
 
 
-/** Definition of the movie publish format. */
+/** Definition of the movie entity. */
 export type MovieImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -1243,7 +1394,7 @@ export type MovieImagesArgs = {
 };
 
 
-/** Definition of the movie publish format. */
+/** Definition of the movie entity. */
 export type MovieLicensesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -1256,7 +1407,7 @@ export type MovieLicensesArgs = {
 };
 
 
-/** Definition of the movie publish format. */
+/** Definition of the movie entity. */
 export type MovieVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -1272,6 +1423,8 @@ export type MovieVideosArgs = {
 export type MovieCondition = {
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Movie` object types. All fields are combined with a logical ‘and.’ */
@@ -1284,9 +1437,11 @@ export type MovieFilter = {
   not?: InputMaybe<MovieFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<MovieFilter>>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
-/** Definition of the movie genre publish format. */
+/** Definition of the movie genre entity. */
 export type MovieGenre = {
   __typename?: 'MovieGenre';
   id: Scalars['String'];
@@ -1305,6 +1460,8 @@ export type MovieGenreCondition = {
   id?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `orderNo` field. */
   orderNo?: InputMaybe<Scalars['Int']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `MovieGenre` object types. All fields are combined with a logical ‘and.’ */
@@ -1319,6 +1476,8 @@ export type MovieGenreFilter = {
   or?: InputMaybe<Array<MovieGenreFilter>>;
   /** Filter by the object’s `orderNo` field. */
   orderNo?: InputMaybe<IntFilter>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
 /** A connection to a list of `MovieGenre` values. */
@@ -1351,7 +1510,9 @@ export enum MovieGenresOrderBy {
   OrderNoAsc = 'ORDER_NO_ASC',
   OrderNoDesc = 'ORDER_NO_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
 export type MovieGenresRelation = {
@@ -1439,6 +1600,7 @@ export enum MovieGenresRelationsOrderBy {
 /** Asset image metadata. */
 export type MovieImage = {
   __typename?: 'MovieImage';
+  altText?: Maybe<Scalars['String']>;
   /** Height of the image in pixels. */
   height?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -1458,6 +1620,8 @@ export type MovieImage = {
  * for equality and combined with a logical ‘and.’
  */
 export type MovieImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `movieId` field. */
@@ -1466,6 +1630,8 @@ export type MovieImageCondition = {
 
 /** A filter to be used against `MovieImage` object types. All fields are combined with a logical ‘and.’ */
 export type MovieImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<MovieImageFilter>>;
   /** Filter by the object’s `id` field. */
@@ -1502,6 +1668,8 @@ export type MovieImagesEdge = {
 
 /** Methods to use when ordering `MovieImage`. */
 export enum MovieImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   MovieIdAsc = 'MOVIE_ID_ASC',
@@ -1612,7 +1780,9 @@ export enum MoviesOrderBy {
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
 /** Video stream metadata. */
@@ -1931,6 +2101,270 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['Cursor']>;
 };
 
+/** Definition of the playlist entity. */
+export type Playlist = {
+  __typename?: 'Playlist';
+  /** Reads a single `Channel` that is related to this `Playlist`. */
+  channel?: Maybe<Channel>;
+  /** The channel ID. */
+  channelId?: Maybe<Scalars['String']>;
+  /** End date of the playlist. */
+  endDateTime: Scalars['Datetime'];
+  id: Scalars['String'];
+  /** Reads and enables pagination through a set of `Program`. */
+  programs: ProgramsConnection;
+  /** Start date of the playlist. */
+  startDateTime: Scalars['Datetime'];
+};
+
+
+/** Definition of the playlist entity. */
+export type PlaylistProgramsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<ProgramCondition>;
+  filter?: InputMaybe<ProgramFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<ProgramsOrderBy>>;
+};
+
+/**
+ * A condition to be used against `Playlist` object types. All fields are tested
+ * for equality and combined with a logical ‘and.’
+ */
+export type PlaylistCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['String']>;
+};
+
+/** A filter to be used against `Playlist` object types. All fields are combined with a logical ‘and.’ */
+export type PlaylistFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<PlaylistFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<PlaylistFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<PlaylistFilter>>;
+};
+
+/** A connection to a list of `Playlist` values. */
+export type PlaylistsConnection = {
+  __typename?: 'PlaylistsConnection';
+  /** A list of edges which contains the `Playlist` and cursor to aid in pagination. */
+  edges: Array<PlaylistsEdge>;
+  /** A list of `Playlist` objects. */
+  nodes: Array<Playlist>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Playlist` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `Playlist` edge in the connection. */
+export type PlaylistsEdge = {
+  __typename?: 'PlaylistsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Playlist` at the end of the edge. */
+  node: Playlist;
+};
+
+/** Methods to use when ordering `Playlist`. */
+export enum PlaylistsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StartDateTimeAsc = 'START_DATE_TIME_ASC',
+  StartDateTimeDesc = 'START_DATE_TIME_DESC'
+}
+
+/** Definition of the program object. */
+export type Program = {
+  __typename?: 'Program';
+  /** Reads a single `Episode` that is related to this `Program`. */
+  episode?: Maybe<Episode>;
+  /** The episode ID. */
+  episodeId?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  /** Reads and enables pagination through a set of `ProgramImage`. */
+  images: ProgramImagesConnection;
+  /** Reads a single `Movie` that is related to this `Program`. */
+  movie?: Maybe<Movie>;
+  /** The movie ID. */
+  movieId?: Maybe<Scalars['String']>;
+  /** Reads a single `Playlist` that is related to this `Program`. */
+  playlist?: Maybe<Playlist>;
+  playlistId?: Maybe<Scalars['String']>;
+  /** The sort index of the program. */
+  sortIndex?: Maybe<Scalars['Int']>;
+  /** Title of the program. */
+  title?: Maybe<Scalars['String']>;
+};
+
+
+/** Definition of the program object. */
+export type ProgramImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<ProgramImageCondition>;
+  filter?: InputMaybe<ProgramImageFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<ProgramImagesOrderBy>>;
+};
+
+/** A condition to be used against `Program` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ProgramCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Checks for equality with the object’s `playlistId` field. */
+  playlistId?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** A filter to be used against `Program` object types. All fields are combined with a logical ‘and.’ */
+export type ProgramFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ProgramFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<IntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ProgramFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ProgramFilter>>;
+  /** Filter by the object’s `playlistId` field. */
+  playlistId?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
+};
+
+/** Asset image metadata. */
+export type ProgramImage = {
+  __typename?: 'ProgramImage';
+  altText?: Maybe<Scalars['String']>;
+  /** Height of the image in pixels. */
+  height?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  /** URI to the image file. */
+  path?: Maybe<Scalars['String']>;
+  /** Reads a single `Program` that is related to this `ProgramImage`. */
+  program?: Maybe<Program>;
+  programId?: Maybe<Scalars['Int']>;
+  /** Type of the image. */
+  type?: Maybe<Scalars['String']>;
+  /** Width of the image in pixels. */
+  width?: Maybe<Scalars['Int']>;
+};
+
+/**
+ * A condition to be used against `ProgramImage` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ProgramImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Checks for equality with the object’s `programId` field. */
+  programId?: InputMaybe<Scalars['Int']>;
+};
+
+/** A filter to be used against `ProgramImage` object types. All fields are combined with a logical ‘and.’ */
+export type ProgramImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ProgramImageFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<IntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ProgramImageFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ProgramImageFilter>>;
+  /** Filter by the object’s `programId` field. */
+  programId?: InputMaybe<IntFilter>;
+};
+
+/** A connection to a list of `ProgramImage` values. */
+export type ProgramImagesConnection = {
+  __typename?: 'ProgramImagesConnection';
+  /** A list of edges which contains the `ProgramImage` and cursor to aid in pagination. */
+  edges: Array<ProgramImagesEdge>;
+  /** A list of `ProgramImage` objects. */
+  nodes: Array<ProgramImage>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ProgramImage` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `ProgramImage` edge in the connection. */
+export type ProgramImagesEdge = {
+  __typename?: 'ProgramImagesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `ProgramImage` at the end of the edge. */
+  node: ProgramImage;
+};
+
+/** Methods to use when ordering `ProgramImage`. */
+export enum ProgramImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ProgramIdAsc = 'PROGRAM_ID_ASC',
+  ProgramIdDesc = 'PROGRAM_ID_DESC'
+}
+
+/** A connection to a list of `Program` values. */
+export type ProgramsConnection = {
+  __typename?: 'ProgramsConnection';
+  /** A list of edges which contains the `Program` and cursor to aid in pagination. */
+  edges: Array<ProgramsEdge>;
+  /** A list of `Program` objects. */
+  nodes: Array<Program>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Program` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `Program` edge in the connection. */
+export type ProgramsEdge = {
+  __typename?: 'ProgramsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Program` at the end of the edge. */
+  node: Program;
+};
+
+/** Methods to use when ordering `Program`. */
+export enum ProgramsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PlaylistIdAsc = 'PLAYLIST_ID_ASC',
+  PlaylistIdDesc = 'PLAYLIST_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  SortIndexAsc = 'SORT_INDEX_ASC',
+  SortIndexDesc = 'SORT_INDEX_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
+}
+
 /** The root query type which gives access points into the data universe. */
 export type Query = {
   __typename?: 'Query';
@@ -1943,12 +2377,18 @@ export type Query = {
   episode?: Maybe<Episode>;
   /** Reads and enables pagination through a set of `Episode`. */
   episodes?: Maybe<EpisodesConnection>;
+  locale?: Maybe<Locale>;
+  /** Reads and enables pagination through a set of `Locale`. */
+  locales?: Maybe<LocalesConnection>;
   movie?: Maybe<Movie>;
   movieGenre?: Maybe<MovieGenre>;
   /** Reads and enables pagination through a set of `MovieGenre`. */
   movieGenres?: Maybe<MovieGenresConnection>;
   /** Reads and enables pagination through a set of `Movie`. */
   movies?: Maybe<MoviesConnection>;
+  playlist?: Maybe<Playlist>;
+  /** Reads and enables pagination through a set of `Playlist`. */
+  playlists?: Maybe<PlaylistsConnection>;
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
@@ -2025,6 +2465,25 @@ export type QueryEpisodesArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryLocaleArgs = {
+  locale: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryLocalesArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<LocaleCondition>;
+  filter?: InputMaybe<LocaleFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<LocalesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryMovieArgs = {
   countryCode?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -2060,6 +2519,25 @@ export type QueryMoviesArgs = {
   last?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<MoviesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPlaylistArgs = {
+  id: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPlaylistsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<PlaylistCondition>;
+  filter?: InputMaybe<PlaylistFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
 
 
@@ -2119,7 +2597,7 @@ export type QueryTvshowsArgs = {
   orderBy?: InputMaybe<Array<TvshowsOrderBy>>;
 };
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type Season = {
   __typename?: 'Season';
   /** Cast of the season. */
@@ -2155,7 +2633,7 @@ export type Season = {
 };
 
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type SeasonEpisodesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2168,7 +2646,7 @@ export type SeasonEpisodesArgs = {
 };
 
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type SeasonGenresArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2181,7 +2659,7 @@ export type SeasonGenresArgs = {
 };
 
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type SeasonImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2194,7 +2672,7 @@ export type SeasonImagesArgs = {
 };
 
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type SeasonLicensesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2207,7 +2685,7 @@ export type SeasonLicensesArgs = {
 };
 
 
-/** Definition of the TV show season publish format. */
+/** Definition of the TV show season entity. */
 export type SeasonVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2326,6 +2804,7 @@ export enum SeasonGenresRelationsOrderBy {
 /** Asset image metadata. */
 export type SeasonImage = {
   __typename?: 'SeasonImage';
+  altText?: Maybe<Scalars['String']>;
   /** Height of the image in pixels. */
   height?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -2345,6 +2824,8 @@ export type SeasonImage = {
  * for equality and combined with a logical ‘and.’
  */
 export type SeasonImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `seasonId` field. */
@@ -2353,6 +2834,8 @@ export type SeasonImageCondition = {
 
 /** A filter to be used against `SeasonImage` object types. All fields are combined with a logical ‘and.’ */
 export type SeasonImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<SeasonImageFilter>>;
   /** Filter by the object’s `id` field. */
@@ -2389,6 +2872,8 @@ export type SeasonImagesEdge = {
 
 /** Methods to use when ordering `SeasonImage`. */
 export enum SeasonImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
@@ -2879,7 +3364,7 @@ export type StringFilter = {
   startsWithInsensitive?: InputMaybe<Scalars['String']>;
 };
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type Tvshow = {
   __typename?: 'Tvshow';
   /** Cast of the TV show. */
@@ -2914,7 +3399,7 @@ export type Tvshow = {
 };
 
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type TvshowGenresArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2927,7 +3412,7 @@ export type TvshowGenresArgs = {
 };
 
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type TvshowImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2940,7 +3425,7 @@ export type TvshowImagesArgs = {
 };
 
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type TvshowLicensesArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2953,7 +3438,7 @@ export type TvshowLicensesArgs = {
 };
 
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type TvshowSeasonsArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2966,7 +3451,7 @@ export type TvshowSeasonsArgs = {
 };
 
 
-/** Definition of the TV show publish format. */
+/** Definition of the TV show entity. */
 export type TvshowVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
@@ -2982,6 +3467,8 @@ export type TvshowVideosArgs = {
 export type TvshowCondition = {
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Tvshow` object types. All fields are combined with a logical ‘and.’ */
@@ -2994,9 +3481,11 @@ export type TvshowFilter = {
   not?: InputMaybe<TvshowFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<TvshowFilter>>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
-/** Definition of the TV show genre publish format. */
+/** Definition of the TV show genre entity. */
 export type TvshowGenre = {
   __typename?: 'TvshowGenre';
   id: Scalars['String'];
@@ -3015,6 +3504,8 @@ export type TvshowGenreCondition = {
   id?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `orderNo` field. */
   orderNo?: InputMaybe<Scalars['Int']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `TvshowGenre` object types. All fields are combined with a logical ‘and.’ */
@@ -3029,6 +3520,8 @@ export type TvshowGenreFilter = {
   or?: InputMaybe<Array<TvshowGenreFilter>>;
   /** Filter by the object’s `orderNo` field. */
   orderNo?: InputMaybe<IntFilter>;
+  /** Filter by the object’s `title` field. */
+  title?: InputMaybe<StringFilter>;
 };
 
 /** A connection to a list of `TvshowGenre` values. */
@@ -3061,7 +3554,9 @@ export enum TvshowGenresOrderBy {
   OrderNoAsc = 'ORDER_NO_ASC',
   OrderNoDesc = 'ORDER_NO_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
 export type TvshowGenresRelation = {
@@ -3149,6 +3644,7 @@ export enum TvshowGenresRelationsOrderBy {
 /** Asset image metadata. */
 export type TvshowImage = {
   __typename?: 'TvshowImage';
+  altText?: Maybe<Scalars['String']>;
   /** Height of the image in pixels. */
   height?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -3168,6 +3664,8 @@ export type TvshowImage = {
  * for equality and combined with a logical ‘and.’
  */
 export type TvshowImageCondition = {
+  /** Checks for equality with the object’s `altText` field. */
+  altText?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `tvshowId` field. */
@@ -3176,6 +3674,8 @@ export type TvshowImageCondition = {
 
 /** A filter to be used against `TvshowImage` object types. All fields are combined with a logical ‘and.’ */
 export type TvshowImageFilter = {
+  /** Filter by the object’s `altText` field. */
+  altText?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<TvshowImageFilter>>;
   /** Filter by the object’s `id` field. */
@@ -3212,6 +3712,8 @@ export type TvshowImagesEdge = {
 
 /** Methods to use when ordering `TvshowImage`. */
 export enum TvshowImagesOrderBy {
+  AltTextAsc = 'ALT_TEXT_ASC',
+  AltTextDesc = 'ALT_TEXT_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
@@ -3322,7 +3824,9 @@ export enum TvshowsOrderBy {
   IdDesc = 'ID_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
 }
 
 /** Video stream metadata. */

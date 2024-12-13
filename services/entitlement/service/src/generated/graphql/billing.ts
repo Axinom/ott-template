@@ -17,7 +17,6 @@ export type Scalars = {
   BigFloat: any;
   Cursor: any;
   Datetime: any;
-  JSON: any;
   UUID: any;
 };
 
@@ -711,7 +710,6 @@ export type Iso31661Alpha2Filter = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type Mutation = {
   __typename?: 'Mutation';
-  debugInfo: Scalars['JSON'];
   /** Activate a PayPal based subscription */
   paypalActivateSubscription: PaypalActivateSubscriptionPayload;
   /** Cancel a PayPal based subscription */
@@ -1461,7 +1459,6 @@ export type PeriodUnitFilter = {
 /** The root query type which gives access points into the data universe. */
 export type Query = {
   __typename?: 'Query';
-  debugInfo: Scalars['JSON'];
   paymentPlan?: Maybe<PaymentPlan>;
   /** Reads and enables pagination through a set of `PaymentPlan`. */
   paymentPlans?: Maybe<PaymentPlansConnection>;

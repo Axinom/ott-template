@@ -5734,6 +5734,8 @@ export enum ErrorCodesEnum {
   UnhandledDatabaseError = 'UNHANDLED_DATABASE_ERROR',
   /** An unhandled error has occurred. Please contact the service support. */
   UnhandledError = 'UNHANDLED_ERROR',
+  /** Attempt to create or update an element failed, as it would have resulted in a duplicate element. */
+  UniqueConstraintError = 'UNIQUE_CONSTRAINT_ERROR',
   /** Attempt to unpublish media has failed. */
   UnpublishError = 'UNPUBLISH_ERROR',
   /** Unable to generate display title for ingest item. Ingest media type '%s' is not supported. */
@@ -6023,6 +6025,7 @@ export type IngestDocument = {
   inProgressCount: Scalars['Int'];
   itemsCount: Scalars['Int'];
   name: Scalars['String'];
+  startedCount: Scalars['Int'];
   status: IngestStatus;
   successCount: Scalars['Int'];
   title: Scalars['String'];
@@ -6068,6 +6071,8 @@ export type IngestDocumentCondition = {
   itemsCount?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `startedCount` field. */
+  startedCount?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `status` field. */
   status?: InputMaybe<IngestStatus>;
   /** Checks for equality with the object’s `successCount` field. */
@@ -6116,6 +6121,8 @@ export type IngestDocumentFilter = {
   not?: InputMaybe<IngestDocumentFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<IngestDocumentFilter>>;
+  /** Filter by the object’s `startedCount` field. */
+  startedCount?: InputMaybe<IntFilter>;
   /** Filter by the object’s `status` field. */
   status?: InputMaybe<IngestStatusFilter>;
   /** Filter by the object’s `successCount` field. */
@@ -6223,6 +6230,8 @@ export enum IngestDocumentsOrderBy {
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StartedCountAsc = 'STARTED_COUNT_ASC',
+  StartedCountDesc = 'STARTED_COUNT_DESC',
   StatusAsc = 'STATUS_ASC',
   StatusDesc = 'STATUS_DESC',
   SuccessCountAsc = 'SUCCESS_COUNT_ASC',
