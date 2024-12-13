@@ -4,8 +4,8 @@ import {
   VideoServiceMultiTenantMessagingSettings,
 } from '@axinom/mosaic-messages';
 import { assertNotFalsy } from '@axinom/mosaic-service-common';
-import { createReadStream, readFileSync, ReadStream } from 'fs';
-import { Upload } from 'graphql-upload';
+import { createReadStream, readFileSync } from 'fs';
+import Upload from 'graphql-upload/Upload.js';
 import { stub } from 'jest-auto-stub';
 import 'jest-extended';
 import { MediaServiceMessagingSettings } from 'media-messages';
@@ -213,6 +213,9 @@ describe('Movies GraphQL endpoints', () => {
       'documents/movie-without-videos.json',
     ])('upload a json file %p -> document is created', async (filePath) => {
       // Arrange
+      // const stream = new Readable();
+      // stream.push(readFileSync(resolve(__dirname, filePath)));
+      // stream.push(null);
       const file = createReadStream(resolve(__dirname, filePath));
 
       const upload = new Upload();
@@ -221,7 +224,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'valid-movie.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file,
+          createReadStream: () => file as any,
         }),
       );
 
@@ -255,7 +258,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'movie-without-title.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file,
+          createReadStream: () => file as any,
         }),
       );
 
@@ -313,7 +316,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'single-line-json.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file as ReadStream,
+          createReadStream: () => file as any,
         }),
       );
 
@@ -371,7 +374,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'invalid-movie-for-custom-errors.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file,
+          createReadStream: () => file as any,
         }),
       );
 
@@ -435,7 +438,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'duplicate-movie-external-ids.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file,
+          createReadStream: () => file as any,
         }),
       );
 
@@ -488,7 +491,7 @@ describe('Movies GraphQL endpoints', () => {
           filename: 'all-types-with-videos-and-images.json',
           mimetype: 'application/json',
           encoding: 'UTF-8',
-          createReadStream: () => file,
+          createReadStream: () => file as any,
         }),
       );
 
