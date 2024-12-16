@@ -91,7 +91,7 @@
   },
   "devDependencies": {
     "@azure/storage-blob": "^12.14.0",
-    "@graphql-codegen/cli": "^2.13.4",
+    "@graphql-codegen/cli": "^4.0.1",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-graphql-request": "^4.5.5",
     "@graphql-codegen/typescript-operations": "^2.5.3",

@@ -3740,7 +3740,6 @@ export type Mutation = {
   encodeVideo?: Maybe<EncodeVideoPayload>;
   generateEntitlementWebhookSecret: GenerateEntitlementWebhookSecretPayload;
   generateManifestWebhookSecret: GenerateManifestWebhookSecretPayload;
-  populateVideos?: Maybe<PopulatePayload>;
   retryEncodeVideo?: Maybe<RetryEncodeVideoPayload>;
   setAmazonS3AcquisitionProfile: EncodingAcquisitionProfile;
   setAmazonS3PublishingProfile: EncodingPublishingProfile;
@@ -3750,7 +3749,6 @@ export type Mutation = {
   setHostingAzureAcquisitionProfile: EncodingAcquisitionProfile;
   setHostingAzurePublishingProfile: EncodingPublishingProfile;
   startVideosDeletion?: Maybe<BulkMutationUuidPayload>;
-  truncateVideos?: Maybe<TruncateVideosPayload>;
   unarchiveVideos?: Maybe<BulkMutationUuidPayload>;
   updateAmazonS3AcquisitionProfile: EncodingAcquisitionProfile;
   updateAmazonS3PublishingProfile: EncodingPublishingProfile;
@@ -3890,12 +3888,6 @@ export type MutationDeleteVideosTagArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationEncodeVideoArgs = {
   input: EncodeVideoInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationPopulateVideosArgs = {
-  input: PopulateInput;
 };
 
 
@@ -4148,20 +4140,6 @@ export type PlaybackVideoPayload = {
   hlsManifestUrl?: Maybe<Scalars['String']>;
   playreadyLicenseServiceUrl?: Maybe<Scalars['String']>;
   widevineLicenseServiceUrl?: Maybe<Scalars['String']>;
-};
-
-export type PopulateInput = {
-  count: Scalars['Int'];
-  includeCuePoints?: InputMaybe<Scalars['Boolean']>;
-  includeHistories?: InputMaybe<Scalars['Boolean']>;
-  includeStreams?: InputMaybe<Scalars['Boolean']>;
-  includeTags?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type PopulatePayload = {
-  __typename?: 'PopulatePayload';
-  count: Scalars['Int'];
-  query?: Maybe<Query>;
 };
 
 export enum PreviewStatus {
@@ -4818,11 +4796,6 @@ export type TarModeFilter = {
   notEqualTo?: InputMaybe<TarMode>;
   /** Not included in the specified list. */
   notIn?: InputMaybe<Array<TarMode>>;
-};
-
-export type TruncateVideosPayload = {
-  __typename?: 'TruncateVideosPayload';
-  completed: Scalars['Boolean'];
 };
 
 export type UpdateAmazonS3AcquisitionProfileInput = {

@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@axinom/mosaic-portal": "0.38.1",
-    "@graphql-codegen/cli": "^2.13.4",
+    "@graphql-codegen/cli": "^4.0.1",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
