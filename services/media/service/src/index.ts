@@ -29,7 +29,7 @@ import {
   trimErrorsSkipMaskMiddleware,
 } from '@axinom/mosaic-service-common';
 import express from 'express';
-import { graphqlUploadExpress } from 'graphql-upload';
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import { PoolConfig } from 'pg';
 import {
   applyMigrations,
