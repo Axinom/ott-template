@@ -5,6 +5,9 @@ pr:
     include:
       - dev
 
+variables:
+  - group: github-automation
+
 jobs:
   - job: VerifyPrName
     pool:
@@ -45,5 +48,5 @@ jobs:
               exit 1
           fi
         env:
-          GITHUB_TOKEN: $(GITHUB_TOKEN)
+          GITHUB_TOKEN: $(GH_TOKEN) # from the variable group
         displayName: 'Verify Pull Request Name'
