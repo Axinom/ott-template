@@ -195,7 +195,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -287,7 +287,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -327,7 +327,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -378,7 +378,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -418,7 +418,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -471,7 +471,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -511,7 +511,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -545,7 +545,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -600,7 +600,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -640,7 +640,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -686,7 +686,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -737,7 +737,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -783,7 +783,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -836,7 +836,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -882,7 +882,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -935,7 +935,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -1093,7 +1093,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -1144,7 +1144,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
@@ -1190,7 +1190,7 @@ describe('getVideosMetadata', () => {
         nodes: [
           {
             timeInSeconds: 10,
-            cuePointTypeKey: 'OUTRO_IN',
+            cuePointTypeKey: 'OUTRO_START',
             value: '',
           },
         ],
@@ -1243,7 +1243,7 @@ describe('getVideosMetadata', () => {
           cue_points: [
             {
               time_in_seconds: 10,
-              cue_point_type_key: 'OUTRO_IN',
+              cue_point_type_key: 'OUTRO_START',
               value: '',
             },
           ],
