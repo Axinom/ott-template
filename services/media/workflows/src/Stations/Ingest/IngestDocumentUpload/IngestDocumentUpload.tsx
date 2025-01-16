@@ -88,7 +88,12 @@ export const IngestDocumentUpload: React.FC = () => {
         loading: false,
       }}
     >
-      <Field name="ingest" label="Document" as={FileUploadField} />
+      <Field
+        name="ingest"
+        label="Document"
+        as={FileUploadField}
+        accept="application/json"
+      />
     </Create>
   );
 };
