@@ -7,9 +7,9 @@ import { ClientBase } from 'pg';
 import { Config, requestServiceAccountToken } from '../common';
 
 export const videoCuePointTypes = [
-  { key: 'INTRO_OUT', title: 'Intro out' },
+  { key: 'INTRO_END', title: 'Intro end' },
   { key: 'CHAPTER_MARKER', title: 'Chapter marker' },
-  { key: 'OUTRO_IN', title: 'Outro in' },
+  { key: 'OUTRO_START', title: 'Outro start' },
 ];
 
 export const registerVideoCuePointTypes = async (
