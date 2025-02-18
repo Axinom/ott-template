@@ -203,7 +203,9 @@ export function register(app: PiletApi, extensions: Extensions): void {
 
   app.registerPage('/settings/media/tvshowgenres', TvShowGenres, {
     breadcrumb: () => 'TV Show Genres',
-    permissions: { 'media-service': ['SETTINGS_VIEW'] },
+    permissions: {
+      'media-service': ['ADMIN', 'SETTINGS_EDIT', 'SETTINGS_VIEW'],
+    },
   });
 
   app.registerPage('/tvshows/:tvshowId/snapshots', TvShowSnapshots, {
